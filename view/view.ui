@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>View</class>
+ <widget class="QWidget" name="View">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>164</width>
+    <height>722</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QCheckBox" name="showStatic">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Static</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="painterLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>91</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Painter:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="colorOffset">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>310</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.15</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="painter">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="maxVisibleItems">
+    <number>20</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>velocity</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>pressure</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>arrow</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>passive scalar</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>multicomponent</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>normal arrow</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>stream function</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>vorticity</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>vorticity magnitude</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>detail</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>permeability</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>flux</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Min:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>270</y>
+     <width>131</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Colors:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showDynamic">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>200</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Dyn.</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>340</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="colorInterval">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>360</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.15</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="painterLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>151</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Upd (ms):</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="updatePeriod">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="autoAdjust">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>440</y>
+     <width>141</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Auto Adjust</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="continuousAutoAdjust">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>470</y>
+     <width>161</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Continuous AA</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>500</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sc1:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="cellsSize">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>520</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>10</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showParticles">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>160</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Particles</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>390</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Steps:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="colorSteps">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="painterLabel_3">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>30</y>
+     <width>91</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Group:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="arrowSteps">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>50</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="resetProjection">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>650</y>
+     <width>141</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset Projection</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showAxis">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Axis</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_11">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>500</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Zoom:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="cellsSize2">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>520</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>500</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sc2:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="zoom">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>520</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>600</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Roll:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="roll">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>620</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="pitch">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>620</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>600</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Pitch:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_14">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>600</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Yaw:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="yaw">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>620</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="allView">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>240</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>All</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showColorBar">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>180</y>
+     <width>141</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ColorBar</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>550</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>tX:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="tx">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>570</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="tz">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>570</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_16">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>550</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>tY:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="ty">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>570</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_17">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>550</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>tZ:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="show2ndDistribution">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>200</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>2nd Distr.</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_18">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>390</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Component:</string>
+   </property>
+  </widget>
+  <widget class="ImprovedLineEdit" name="colorComponent">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>410</y>
+     <width>61</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="configurePainter">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>130</y>
+     <width>141</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Configure</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showIsolines">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Isolines</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="heightmap">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>220</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Heightmap</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="illumination">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>690</y>
+     <width>161</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Illumination</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="showForces">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>240</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Forces</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImprovedLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>improvedlineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>updatePeriod</tabstop>
+  <tabstop>arrowSteps</tabstop>
+  <tabstop>painter</tabstop>
+  <tabstop>configurePainter</tabstop>
+  <tabstop>showAxis</tabstop>
+  <tabstop>showStatic</tabstop>
+  <tabstop>showDynamic</tabstop>
+  <tabstop>showIsolines</tabstop>
+  <tabstop>showForces</tabstop>
+  <tabstop>showParticles</tabstop>
+  <tabstop>showColorBar</tabstop>
+  <tabstop>show2ndDistribution</tabstop>
+  <tabstop>heightmap</tabstop>
+  <tabstop>allView</tabstop>
+  <tabstop>colorOffset</tabstop>
+  <tabstop>colorInterval</tabstop>
+  <tabstop>colorSteps</tabstop>
+  <tabstop>colorComponent</tabstop>
+  <tabstop>autoAdjust</tabstop>
+  <tabstop>continuousAutoAdjust</tabstop>
+  <tabstop>cellsSize</tabstop>
+  <tabstop>cellsSize2</tabstop>
+  <tabstop>zoom</tabstop>
+  <tabstop>tx</tabstop>
+  <tabstop>ty</tabstop>
+  <tabstop>tz</tabstop>
+  <tabstop>roll</tabstop>
+  <tabstop>pitch</tabstop>
+  <tabstop>yaw</tabstop>
+  <tabstop>resetProjection</tabstop>
+  <tabstop>illumination</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

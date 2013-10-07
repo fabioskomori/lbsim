@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LBMainWindow</class>
+ <widget class="QMainWindow" name="LBMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LBSim</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDialogs">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionMesher"/>
+    <addaction name="actionModel_and_Parameters"/>
+    <addaction name="separator"/>
+    <addaction name="actionColors"/>
+    <addaction name="actionView2"/>
+    <addaction name="actionParticles"/>
+    <addaction name="actionAnimation"/>
+    <addaction name="separator"/>
+    <addaction name="actionChart"/>
+    <addaction name="actionResults"/>
+    <addaction name="separator"/>
+    <addaction name="action_lb_lb2_Editor"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionLoad"/>
+    <addaction name="actionLoad_All_2_testing"/>
+    <addaction name="actionLoad_All_v3"/>
+    <addaction name="actionReload_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_x2"/>
+    <addaction name="actionSave_All_2_testing"/>
+    <addaction name="actionSave_All_v3"/>
+    <addaction name="actionSave_Image"/>
+    <addaction name="actionSave_VTK"/>
+    <addaction name="separator"/>
+    <addaction name="actionUse_zipped_lb3"/>
+   </widget>
+   <widget class="QMenu" name="menuSimulation">
+    <property name="title">
+     <string>&amp;Simulation</string>
+    </property>
+    <addaction name="actionNext"/>
+    <addaction name="actionStart"/>
+    <addaction name="actionStop"/>
+    <addaction name="actionReset"/>
+   </widget>
+   <widget class="QMenu" name="menuOther">
+    <property name="title">
+     <string>&amp;LBSim</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionChanges"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionView_2"/>
+    <addaction name="actionInfo_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionGeometry"/>
+    <addaction name="actionImage_Processing"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSimulation"/>
+   <addaction name="menuDialogs"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuOther"/>
+  </widget>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionStart">
+   <property name="text">
+    <string>Begin</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>End</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionView">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionInfo">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionPhysics">
+   <property name="text">
+    <string>Physics (deprecated)</string>
+   </property>
+  </action>
+  <action name="actionModel">
+   <property name="text">
+    <string>Model (deprecated)</string>
+   </property>
+  </action>
+  <action name="actionColors">
+   <property name="text">
+    <string>Colors</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionChart">
+   <property name="text">
+    <string>Charts</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="actionDraw_2">
+   <property name="text">
+    <string>Draw</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="text">
+    <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionLoad_All">
+   <property name="text">
+    <string>Load All</string>
+   </property>
+  </action>
+  <action name="actionView2">
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>Credits</string>
+   </property>
+  </action>
+  <action name="actionParticles">
+   <property name="text">
+    <string>Tracers</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionDebug">
+   <property name="text">
+    <string>Debug</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionParameters">
+   <property name="text">
+    <string>Parameters (deprecated)</string>
+   </property>
+   <property name="toolTip">
+    <string>Parameters</string>
+   </property>
+  </action>
+  <action name="actionVelocity">
+   <property name="text">
+    <string>Velocity</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+1</string>
+   </property>
+  </action>
+  <action name="actionPressure">
+   <property name="text">
+    <string>Pressure</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+2</string>
+   </property>
+  </action>
+  <action name="actionArrow">
+   <property name="text">
+    <string>Arrow</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
+   </property>
+  </action>
+  <action name="actionDetail">
+   <property name="text">
+    <string>Detail</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
+  </action>
+  <action name="actionAxis">
+   <property name="text">
+    <string>Axis</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+A</string>
+   </property>
+  </action>
+  <action name="actionStatic">
+   <property name="text">
+    <string>Static</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
+   </property>
+  </action>
+  <action name="actionDynamic">
+   <property name="text">
+    <string>Dynamic</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+D</string>
+   </property>
+  </action>
+  <action name="actionParticles_2">
+   <property name="text">
+    <string>Particles</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+P</string>
+   </property>
+  </action>
+  <action name="actionConditions">
+   <property name="text">
+    <string>Initial Values (deprecated)</string>
+   </property>
+  </action>
+  <action name="actionForces">
+   <property name="text">
+    <string>Forces</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
+   </property>
+  </action>
+  <action name="actionSave_Image">
+   <property name="text">
+    <string>Save Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionConsole">
+   <property name="text">
+    <string>Console</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
+   </property>
+  </action>
+  <action name="actionReload_All">
+   <property name="text">
+    <string>Reload All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionResults">
+   <property name="text">
+    <string>Results</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+8</string>
+   </property>
+  </action>
+  <action name="actionDrawer">
+   <property name="text">
+    <string>CSG</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="actionSave_All_2_testing">
+   <property name="text">
+    <string>Save All (v2)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionLoad_All_2_testing">
+   <property name="text">
+    <string>Load All (v2)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+  <action name="actionConvert_lb_to_lb2">
+   <property name="text">
+    <string>Convert lb to lb2</string>
+   </property>
+  </action>
+  <action name="actionConvert_lb2_to_lb">
+   <property name="text">
+    <string>Convert lb2 to lb</string>
+   </property>
+  </action>
+  <action name="actionScheduler">
+   <property name="text">
+    <string>Scheduler</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionView_XML_Content">
+   <property name="text">
+    <string>View XML Content</string>
+   </property>
+  </action>
+  <action name="actionStart_Server">
+   <property name="text">
+    <string>Start Server</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+9</string>
+   </property>
+  </action>
+  <action name="actionStop_Server">
+   <property name="text">
+    <string>Stop Server</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+0</string>
+   </property>
+  </action>
+  <action name="actionRegression">
+   <property name="text">
+    <string>Regression</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
+   </property>
+  </action>
+  <action name="actionChanges">
+   <property name="text">
+    <string>Changes</string>
+   </property>
+  </action>
+  <action name="action_lb_lb2_Editor">
+   <property name="text">
+    <string>lb2 Editor</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+9</string>
+   </property>
+  </action>
+  <action name="actionInterpolation">
+   <property name="text">
+    <string>Interpolation</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
+  </action>
+  <action name="actionOpenCL">
+   <property name="text">
+    <string>OpenCL</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionInspector">
+   <property name="text">
+    <string>Inspector</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+6</string>
+   </property>
+  </action>
+  <action name="actionUse_zipped_lb3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use zipped lb2</string>
+   </property>
+  </action>
+  <action name="actionAnimation">
+   <property name="text">
+    <string>Animation</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
+   </property>
+  </action>
+  <action name="actionModel_and_Parameters">
+   <property name="text">
+    <string>Parameters</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_x2">
+   <property name="text">
+    <string>Save x2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionSave_VTK">
+   <property name="text">
+    <string>Export to VTK</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K</string>
+   </property>
+  </action>
+  <action name="actionView_2">
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionInfo_2">
+   <property name="text">
+    <string>Info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionDrawer_2">
+   <property name="text">
+    <string>Drawer</string>
+   </property>
+  </action>
+  <action name="actionMesher">
+   <property name="text">
+    <string>Mesher</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionSave_All_v3">
+   <property name="text">
+    <string>Save All (v3)</string>
+   </property>
+  </action>
+  <action name="actionLoad_All_v3">
+   <property name="text">
+    <string>Load All (v3)</string>
+   </property>
+  </action>
+  <action name="actionD3_IDE">
+   <property name="text">
+    <string>D3</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+D</string>
+   </property>
+  </action>
+  <action name="actionImage_Processing">
+   <property name="text">
+    <string>Image Processing</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+P</string>
+   </property>
+  </action>
+  <action name="actionGeometry">
+   <property name="text">
+    <string>Geometry</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+G</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
