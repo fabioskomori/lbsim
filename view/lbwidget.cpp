@@ -21,7 +21,6 @@
 #include "lbmainwindow.h"
 #include "chart.h"
 #include "view.h"
-#include "scheduler.h"
 #include "util/executor.h"
 #include "painter/painter.h"
 #include "painter/camera.h"
@@ -219,7 +218,7 @@ void LBWidget::run() {
             int remaining = 0;
             double performance = ((double) (painter->getGrid()->getConfig()->getWidth() * painter->getGrid()->getConfig()->getHeight() * painter->getGrid()->getConfig()->getLength())) * executions / beginTime->msecsTo(QDateTime::currentDateTime()) / 1000;
             if (mainWindow->getLB()->getPainter()->getGrid()->getConfig()->getMaxIterations() != 0) {
-                remaining = (int)((double)painter->getGrid()->getConfig()->getWidth() * painter->getGrid()->getConfig()->getHeight() * painter->getGrid()->getConfig()->getLength() * (mainWindow->getLB()->getPainter()->getGrid()->getConfig()->getMaxIterations() - mainWindow->getLB()->getPainter()->getGrid()->getSimulation()->getIterations() + mainWindow->getLB()->getPainter()->getGrid()->getConfig()->getMaxIterations() * scheduler->iterationsMissing()) / (performance * 1e6));
+                remaining = (int)((double)painter->getGrid()->getConfig()->getWidth() * painter->getGrid()->getConfig()->getHeight() * painter->getGrid()->getConfig()->getLength() * (mainWindow->getLB()->getPainter()->getGrid()->getConfig()->getMaxIterations() - mainWindow->getLB()->getPainter()->getGrid()->getSimulation()->getIterations() + mainWindow->getLB()->getPainter()->getGrid()->getConfig()->getMaxIterations()) / (performance * 1e6));
             }
             info->logPerformance(beginTime->secsTo(QDateTime::currentDateTime()), remaining, performance);
             painter->getGrid()->getSimulation()->setPerformance(performance);

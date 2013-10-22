@@ -25,9 +25,6 @@
 #include "view2.h"
 #include "about.h"
 #include "particles.h"
-#include "console.h"
-#include "scheduler.h"
-#include "regression.h"
 #include "changes.h"
 #include "codeeditor.h"
 #include "interpolation.h"
@@ -45,8 +42,6 @@
 #include "../model/inputoutput/loaderfromimage.h"
 #include "../model/inputoutput/vtkreporter.h"
 #include <QShortcut>
-#include "command/commandpool.h"
-#include "parameter/parameterpool.h"
 #include "painter/painter.h"
 #include "results.h"
 #include "../model/latticeboltzmann/lbgrid.h"
@@ -71,7 +66,6 @@ QString LBMainWindow::getVersion() {
 LBMainWindow::LBMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::LBMainWindow) {
     ui->setupUi(this);
     widget = new LBWidget();
-    CommandPool::init(widget->getPainter()->getGrid(), this);
     this->setCentralWidget(widget);
     colors = new Colors(widget, this);
     widget->getPainter()->injectColors(colors);
@@ -84,18 +78,13 @@ LBMainWindow::LBMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::LB
     //info->inject(chart);
     info->inject(widget);
     results = new Results(widget->getPainter(), this);
-    scheduler = new Scheduler(this, this);
     //widget->injectChart(chart);
     widget->injectView(view);
     widget->injectResults(results);
     widget->injectMainWindow(this);
-    widget->injectScheduler(scheduler);
     view2 = new View2(widget, this);
     about = new About(this, this);
     particles = new Particles(widget, this);
-    console = new ConsoleDialog(widget->getPainter()->getGrid(), this, this);
-    ParameterPool::init(this);
-    regression = new Regression(this, this);
     changes = new Changes(this);
     codeEditor = new CodeEditor(this);
     interpolation = new Interpolation(widget->getPainter()->getGrid(), this);
@@ -156,9 +145,6 @@ LBMainWindow::~LBMainWindow() {
     delete particles;
     delete results;
     delete about;
-    delete console;
-    delete scheduler;
-    delete regression;
     delete changes;
     delete codeEditor;
     delete interpolation;
@@ -374,11 +360,17 @@ void LBMainWindow::saveAll2(QString fileName, int version) {
     writer.writeStartElement("sussumu");
     widget->getPainter()->getGrid()->passivate(writer, version, fileName);
     view->save(writer);
-    scheduler->passivate(writer);
+    //scheduler->passivate(writer);
+    // for backward compatibility
+    writer.writeStartElement("scheduler");
+    writer.writeEndElement();
     info->save(writer);
     results->save(writer);
     colors->save(writer);
-    regression->save(writer);
+    //regression->save(writer);
+    // for backward compatibility
+    writer.writeStartElement("regression");
+    writer.writeEndElement();
     interpolation->save(writer);
     //opencl->save(writer);
     writer.writeEndElement();
@@ -445,11 +437,19 @@ void LBMainWindow::loadAll2(int version) {
         (*chart)->processGrid(widget->getPainter()->getGrid());
     }
     view->load(reader);
-    scheduler->activate(reader);
+    //scheduler->activate(reader);
+    // for backward compatibility
+    if (reader.name().toString() == "scheduler") {
+        do { reader.readNext(); } while (!reader.isStartElement() && !reader.isEndDocument());
+    }
     info->load(reader);
     results->load(reader);
     colors->load(reader);
-    regression->load(reader);
+    //regression->load(reader);
+    // for backward compatibility
+    if (reader.name().toString() == "regression") {
+        do { reader.readNext(); } while (!reader.isStartElement() && !reader.isEndDocument());
+    }
     interpolation->load(reader);
     //opencl->load(reader);
     widget->updateGL();
@@ -469,10 +469,6 @@ void LBMainWindow::on_actionAbout_triggered() {
 
 void LBMainWindow::on_actionParticles_triggered() {
     particles->show();
-}
-
-void LBMainWindow::on_actionConsole_triggered() {
-    console->show();
 }
 
 void LBMainWindow::on_actionConvert_lb_to_lb2_triggered() {
@@ -501,10 +497,6 @@ void LBMainWindow::on_actionConvert_lb2_to_lb_triggered() {
     }
 }
 
-void LBMainWindow::on_actionScheduler_triggered() {
-    scheduler->show();
-}
-
 QString LBMainWindow::getLastFileName() {
     return lastFileName;
 }
@@ -519,8 +511,7 @@ void LBMainWindow::execute() {
         if (!files.isEmpty()) {
             lastFileName = serverFolder.absolutePath() + "/" + files.at(0);
             QMetaObject::invokeMethod(this, "loadAll2");
-            scheduler->on_run_clicked();
-            while (scheduler->isRunning() && serverRunning) {
+            while (serverRunning) {
                 mutex.lock();
                 waitCondition.wait(&mutex, 1000);
                 mutex.unlock();
@@ -531,8 +522,6 @@ void LBMainWindow::execute() {
             }
             if (serverRunning) {
                 QFile(lastFileName).remove();
-            } else {
-                QMetaObject::invokeMethod(scheduler, "on_stop_clicked");
             }
         }
         mutex.lock();
@@ -561,10 +550,6 @@ void LBMainWindow::startServer(QString folder) {
 
 void LBMainWindow::on_actionStop_Server_triggered() {
     serverRunning = false;
-}
-
-void LBMainWindow::on_actionRegression_triggered() {
-    regression->show();
 }
 
 void LBMainWindow::on_actionChanges_triggered() {

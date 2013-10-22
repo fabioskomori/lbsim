@@ -139,7 +139,6 @@ SOURCES += \
     model/latticeboltzmann/porouscell.cpp \
     model/latticeboltzmann/multi/rkcell.cpp \
     model/latticeboltzmann/shallow/shallowcell.cpp \
-    view/console.cpp \
     view/util/singleton.cpp \
     view/util/historylineedit.cpp \
     model/latticeboltzmann/multi/fecell.cpp \
@@ -154,49 +153,8 @@ SOURCES += \
     model/math/myvector3d.cpp \
     model/math/myquaternion.cpp \
     model/latticeboltzmann/basecell.cpp \
-    view/command/command.cpp \
-    view/command/commandpool.cpp \
-    view/command/densitycommand.cpp \
-    view/command/startcommand.cpp \
-    view/command/loadallcommand.cpp \
-    view/scheduler.cpp \
-    view/command/setmaxiterationscommand.cpp \
-    view/command/resetcommand.cpp \
-    view/command/startblockingcommand.cpp \
-    view/command/settaucommand.cpp \
-    view/command/saveall2command.cpp \
-    view/command/stopcommand.cpp \
-    view/command/setmultiphasecommand.cpp \
-    view/command/setbackgroundcommand.cpp \
-    view/command/setzoomcommand.cpp \
-    view/command/setsmagorinskycommand.cpp \
-    view/command/setresultscommand.cpp \
-    view/command/setperformancecommand.cpp \
-    view/command/setperformanceupdate.cpp \
-    view/command/nextcommand.cpp \
-    view/command/setinitialconditionscommand.cpp \
-    view/command/setgravitycommand.cpp \
-    view/command/setpermeabilitycommand.cpp \
-    view/command/setmovingwallscommand.cpp \
-    view/command/setstrategycommand.cpp \
-    view/command/setvelocitycommand.cpp \
-    view/command/setp0command.cpp \
-    view/command/setthermalcommand.cpp \
-    view/command/viewxmlcommand.cpp \
-    view/regression.cpp \
-    view/parameter/parameter.cpp \
-    view/parameter/parameterpool.cpp \
-    view/parameter/smagorinskyparameter.cpp \
-    view/regression/regressionstrategy.cpp \
-    view/regression/datapoint.cpp \
-    view/regression/parametercontrol.cpp \
-    view/regression/simplecontroller.cpp \
     view/changes.cpp \
     view/codeeditor.cpp \
-    view/regression/geneticcontroller.cpp \
-    view/parameter/tauparameter.cpp \
-    view/command/getcommand.cpp \
-    view/command/loadcommand.cpp \
     model/latticeboltzmann/deposition/depositioncell.cpp \
     model/latticeboltzmann/deposition/depositionwall.cpp \
     view/interpolation.cpp \
@@ -417,7 +375,6 @@ HEADERS += \
     model/latticeboltzmann/porouscell.h \
     model/latticeboltzmann/multi/rkcell.h \
     model/latticeboltzmann/shallow/shallowcell.h \
-    view/console.h \
     view/util/singleton.h \
     view/util/historylineedit.h \
     model/latticeboltzmann/multi/fecell.h \
@@ -432,49 +389,8 @@ HEADERS += \
     model/math/myvector3d.h \
     model/math/myquaternion.h \
     #model/latticeboltzmann/opencl/lbocl.h \
-    view/command/command.h \
-    view/command/commandpool.h \
-    view/command/densitycommand.h \
-    view/command/startcommand.h \
-    view/command/loadallcommand.h \
-    view/scheduler.h \
-    view/command/setmaxiterationscommand.h \
-    view/command/resetcommand.h \
-    view/command/startblockingcommand.h \
-    view/command/settaucommand.h \
-    view/command/saveall2command.h \
-    view/command/stopcommand.h \
-    view/command/setmultiphasecommand.h \
-    view/command/setbackgroundcommand.h \
-    view/command/setzoomcommand.h \
-    view/command/setsmagorinskycommand.h \
-    view/command/setresultscommand.h \
-    view/command/setperformancecommand.h \
-    view/command/setperformanceupdate.h \
-    view/command/nextcommand.h \
-    view/command/setinitialconditionscommand.h \
-    view/command/setgravitycommand.h \
-    view/command/setpermeabilitycommand.h \
-    view/command/setmovingwallscommand.h \
-    view/command/setstrategycommand.h \
-    view/command/setvelocitycommand.h \
-    view/command/setp0command.h \
-    view/command/setthermalcommand.h \
-    view/command/viewxmlcommand.h \
-    view/regression.h \
-    view/parameter/parameter.h \
-    view/parameter/parameterpool.h \
-    view/parameter/smagorinskyparameter.h \
-    view/regression/regressionstrategy.h \
-    view/regression/datapoint.h \
-    view/regression/parametercontrol.h \
-    view/regression/simplecontroller.h \
     view/changes.h \
     view/codeeditor.h \
-    view/regression/geneticcontroller.h \
-    view/parameter/tauparameter.h \
-    view/command/getcommand.h \
-    view/command/loadcommand.h \
     model/latticeboltzmann/deposition/depositioncell.h \
     model/latticeboltzmann/deposition/depositionwall.h \
     view/interpolation.h \
@@ -526,10 +442,7 @@ FORMS += \
     view/view2.ui \
     view/about.ui \
     view/particles.ui \
-    view/console.ui \
     view/results.ui \
-    view/scheduler.ui \
-    view/regression.ui \
     view/changes.ui \
     view/codeeditor.ui \
     view/interpolation.ui \

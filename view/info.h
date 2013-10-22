@@ -53,7 +53,6 @@ public:
 protected:
     void changeEvent(QEvent *e);
 public slots:
-    void test();
     void on_disableCharts_clicked();
     void on_multicoreSupport_clicked();
 private slots:
@@ -63,7 +62,6 @@ private slots:
     void on_infoX2_returnPressed();
     void on_infoY2_returnPressed();
     void on_infoZ2_returnPressed();
-    void on_test_clicked();
 private:
     void updatePointInfo();
     void updatePointInfo2();

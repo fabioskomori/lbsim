@@ -26,12 +26,9 @@ class Chart;
 class View2;
 class About;
 class Particles;
-class ConsoleDialog;
-class Scheduler;
 class ScrollDecorator;
 class LBWidget;
 class Results;
-class Regression;
 class Changes;
 class CodeEditor;
 class Interpolation;
@@ -85,9 +82,6 @@ private:
     About *about;
     Results *results;
     Particles *particles;
-    ConsoleDialog *console;
-    Scheduler *scheduler;
-    Regression *regression;
     Changes *changes;
     CodeEditor *codeEditor;
     Interpolation *interpolation;
@@ -105,7 +99,6 @@ private:
 public slots:
     void loadAll2(int version = 2);
     void load();
-    void on_actionConsole_triggered();
     void on_actionForces_triggered();
     void on_actionParticles_2_triggered();
     void on_actionDynamic_triggered();
@@ -134,11 +127,8 @@ public slots:
     void on_actionConvert_lb_to_lb2_triggered();
     void on_actionLoad_All_2_testing_triggered();
     void on_actionSave_All_2_testing_triggered();
-    void on_actionScheduler_triggered();
     void on_actionStart_Server_triggered();
     void on_actionStop_Server_triggered();
-private slots:
-    void on_actionRegression_triggered();
     void on_actionChanges_triggered();
     void on_action_lb_lb2_Editor_triggered();
     void on_actionInterpolation_triggered();

@@ -734,25 +734,12 @@
     <string>z:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="test">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>110</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>ImprovedLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">improvedlineedit.h</header>
+   <header>improvedlineedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
