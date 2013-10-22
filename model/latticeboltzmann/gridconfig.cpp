@@ -55,7 +55,7 @@ GridConfig::GridConfig(Grid *grid) {
     sourceAmplitude[0] = sourceAmplitude[1] = sourceAmplitude[2] = 0;
     wallVelocity = MyVector3D(0.02, 0, 0);
     processNeighbors = true;
-    periodicBoundaries = false;
+    periodicBoundaries = true;
     this->grid = grid;
     gravity = 0;
     mpG = 0, mpPsi0 = 4, mpP0 = 200, mpGads = -190;
