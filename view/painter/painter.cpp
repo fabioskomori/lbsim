@@ -383,7 +383,7 @@ void Painter::paintIsolines() {
                     if (!showFluid) {
                         color(seeds[s]);
                     }
-                    glBegin(GL_LINE_STRIP);
+                    glBegin(GL_LINES);
                     double z = showHeightmap ? (cellsSize / 100 * (seeds[s] - (colorAverage - colorDelta)) / (2 * colorDelta)) : 0;
                     v = Util::interpolate(getScalarValue(i, j), getScalarValue(i + 1, j), seeds[s]);
                     if (v >= 0 && v <= 1) {
@@ -393,13 +393,13 @@ void Painter::paintIsolines() {
                     if (v >= 0 && v <= 1) {
                         glVertex3f(offsetx + (i + 1) * latticeSize, offsety + (j + v) * latticeSize, offsetz + 0 * latticeSize + latticeSize / 2 + z);
                     }
-                    v = Util::interpolate(getScalarValue(i, j + 1), getScalarValue(i + 1, j + 1), seeds[s]);
+                    v = Util::interpolate(getScalarValue(i + 1, j + 1), getScalarValue(i, j + 1), seeds[s]);
                     if (v >= 0 && v <= 1) {
-                        glVertex3f(offsetx + (i + v) * latticeSize, offsety + (j + 1) * latticeSize, offsetz + 0 * latticeSize + latticeSize / 2 + z);
+                        glVertex3f(offsetx + (i + 1 - v) * latticeSize, offsety + (j + 1) * latticeSize, offsetz + 0 * latticeSize + latticeSize / 2 + z);
                     }
-                    v = Util::interpolate(getScalarValue(i, j), getScalarValue(i, j + 1), seeds[s]);
+                    v = Util::interpolate(getScalarValue(i, j + 1), getScalarValue(i, j), seeds[s]);
                     if (v >= 0 && v <= 1) {
-                        glVertex3f(offsetx + i * latticeSize, offsety + (j + v) * latticeSize, offsetz + 0 * latticeSize + latticeSize / 2 + z);
+                        glVertex3f(offsetx + i * latticeSize, offsety + (j + 1 - v) * latticeSize, offsetz + 0 * latticeSize + latticeSize / 2 + z);
                     }
                     v = Util::interpolate(getScalarValue(i, j), getScalarValue(i + 1, j), seeds[s]);
                     if (v >= 0 && v <= 1) {
