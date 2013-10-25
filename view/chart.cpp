@@ -178,6 +178,7 @@ void Chart::processGrid(Grid *grid) {
             }
         }
         std::list<XYPoint> points;
+        if (grid != 0) {
         for (int var = 0; var < (ui->x->isChecked() ? grid->getConfig()->getWidth() : (ui->y->isChecked() ? grid->getConfig()->getHeight() : ui->z->isChecked() ? grid->getConfig()->getLength() : 0)); var++) {
             int y = (ui->y->isChecked() ? var : ui->yValue->text().toInt() - 1);
             int x = (ui->x->isChecked() ? var : ui->xValue->text().toInt() - 1);
@@ -216,6 +217,7 @@ void Chart::processGrid(Grid *grid) {
         }
         updateChart(points, curve);
         ui->chart->replot();
+        }
         //delete[] vorticities;
     }
 }
