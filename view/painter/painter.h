@@ -59,6 +59,7 @@ public:
     void paintPermeability(bool doPaint = true);
     void paintDetail(bool doPaint = true);
     void paintFlux(bool doPaint = true);
+    void paintMacroFlux(bool doPaint = true);
     void paintPathLines();
     void paintForces();
     void paintColorBar();

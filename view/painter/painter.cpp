@@ -725,6 +725,21 @@ void Painter::paintFlux(bool doPaint) {
     }
 }
 
+void Painter::paintMacroFlux(bool doPaint) {
+    minimumValue = 1e100; maximumValue = -1e100;
+    if (!doPaint) clearScalarField();
+    MyVector3D *fluxes = grid->getFlux();
+    for (std::list<PainterCell*>::iterator cell = cellsList->begin(); cell != cellsList->end(); cell++) {
+        double flux = fluxes[(*cell)->getJ() + (*cell)->getI() * grid->getConfig()->getWidth() + (*cell)->getK() * grid->getConfig()->getWidth() * grid->getConfig()->getHeight()].norm();
+        if (color(flux)) {
+            setScalarValue((*cell)->getJ(), (*cell)->getI(), (*cell)->getK(), flux);
+            if (doPaint) {
+                quad((*cell)->getC(), (*cell)->getCell(), (*cell)->getI(), (*cell)->getJ(), (*cell)->getK(), (*cell)->getOrientation(), flux);
+            }
+        }
+    }
+}
+
 void Painter::paintPressure(bool doPaint) {
     minimumValue = 1e100; maximumValue = -1e100;
     if (!doPaint) clearScalarField();
@@ -1054,8 +1069,10 @@ void Painter::setStrategy(QString strategy) {
         painter = &Painter::paintMulticomponent;
     } else if (strategy == "permeability") {
         painter = &Painter::paintPermeability;
-    } else if (strategy == "flux") {
+    } else if (strategy == "microflux") {
         painter = &Painter::paintFlux;
+    } else if (strategy == "macroflux") {
+        painter = &Painter::paintMacroFlux;
     }
     isolinesRepaint = true;
 }

@@ -259,6 +259,7 @@ void Info::updatePointInfo() {
         double *streams = grid->computeStream(0, 0);
         ui->stream->setText(QString::number(streams[ui->infoX->text().toInt() + ui->infoY->text().toInt() * grid->getConfig()->getWidth()]));
         delete[] streams;
+        ui->flux->setText(QString::number(grid->getFlux(ui->infoX->text().toInt() - 1, ui->infoY->text().toInt() - 1, ui->infoZ->text().toInt() - 1).norm()));
     }
     widget->repaint();
 }

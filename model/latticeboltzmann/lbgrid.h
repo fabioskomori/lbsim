@@ -83,6 +83,8 @@ public:
     void processNeighbors();
     //LBOCL* getOpenCL();
     void randomP();
+    MyVector3D getFlux(int x, int y, int z);
+    MyVector3D* getFlux();
 protected:
 private:
     //LBOCL *opencl;
@@ -99,6 +101,8 @@ private:
     std::map<int, MyVector3D> drag;
     int openclType, openclUpdate, lastOpenclUpdate;
     std::map<int, Listener*> listeners;
+    MyVector3D *fluxes;
+    bool fluxCalculated;
 };
 
 #endif // GRID_H

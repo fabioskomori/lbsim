@@ -63,6 +63,7 @@
 #include "passivescalar/passivescalarsingleton.h"
 #include "passivescalar/momentpropagationcell.h"
 #include "boundary/reflectwithfactorcell.h"
+#include <cmath>
 
 #define FILES 10
 
@@ -97,6 +98,8 @@ Grid::Grid() {
     openclType = CPU;
     openclUpdate = 1;
     lastOpenclUpdate = 0;
+    fluxes = 0;
+    fluxCalculated = false;
 }
 
 Grid::~Grid() {
@@ -387,6 +390,7 @@ void Grid::process(int stage) {
             Scaled(this, neighborsCache, stage)(i);
         }
     }
+    fluxCalculated = false;
 }
 
 /*LBOCL* Grid::getOpenCL() {
@@ -1094,6 +1098,65 @@ void Grid::optimize() {
         Vector3i v = (*toNull);
         setGrid(v.getY(), v.getX(), v.getZ(), new NullCell());
     }
+}
+
+MyVector3D Grid::getFlux(int x, int y, int z) {
+    int RESOLUTION = 100;
+    BaseCell *cell = getGrid(y, x, 0);
+    if (cell->isFluid()) {
+        MyVector3D v = cell->getU(0);
+        MyVector3D p = MyVector3D(-v.getY(), v.getX(), 0);
+        p = p ^ (1.0 / (RESOLUTION * p.norm()));
+        MyVector3D flux = v ^ cell->getP(0);
+        MyVector3D next = MyVector3D(x + 0.5, y + 0.5, 0);
+        while (1) {
+            next = next + p;
+            BaseCell *cell = getGrid(next.getY(), next.getX(), 0);
+            if (cell == 0 || !cell->isFluid()) break;
+            flux = flux + ((v ^ ((cell->getU(0) * v) / v.norm2())) ^ cell->getP(0));
+        }
+        next = MyVector3D(x + 0.5, y + 0.5, 0);
+        while (1) {
+            next = next - p;
+            BaseCell *cell = getGrid(next.getY(), next.getX(), 0);
+            if (cell == 0 || !cell->isFluid()) break;
+            flux = flux + ((v ^ ((cell->getU(0) * v) / v.norm2())) ^ cell->getP(0));
+        }
+        return flux ^ (1.0 / RESOLUTION);
+    }
+    return MyVector3D();
+}
+
+struct ParallelFlux {
+
+    ParallelFlux(Grid *grid, MyVector3D *fluxes) {
+        this->grid = grid;
+        this->fluxes = fluxes;
+    }
+    //typedef int result_type;
+
+    int operator() (int i) {
+        for (int j = 0; j < grid->getConfig()->getWidth(); j++) {
+            for (int k = 0; k < grid->getConfig()->getLength(); k++) {
+                fluxes[j + i * grid->getConfig()->getWidth() + k * grid->getConfig()->getWidth() * grid->getConfig()->getHeight()] = grid->getFlux(j, i, k);
+            }
+        }
+        return i;
+    }
+    Grid *grid;
+    MyVector3D *fluxes;
+};
+
+MyVector3D* Grid::getFlux() {
+    if (!fluxCalculated) {
+        if (fluxes != 0) {
+            delete[] fluxes;
+        }
+        fluxes = new MyVector3D[config->getWidth() * config->getHeight() * config->getLength()];
+        QtConcurrent::blockingMap(is, ParallelFlux(this, fluxes));
+        fluxCalculated = true;
+    }
+    return fluxes;
 }
 
 bool Grid::isRunning() {

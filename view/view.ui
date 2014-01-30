@@ -124,7 +124,12 @@
    </item>
    <item>
     <property name="text">
-     <string>flux</string>
+     <string>microflux</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>macroflux</string>
     </property>
    </item>
   </widget>
