@@ -32,6 +32,5 @@ BaseCell::~BaseCell() {
 }
 
 BaseCell* BaseCell::clone() {
-    qDebug() << "ops...";
     return 0;
 }

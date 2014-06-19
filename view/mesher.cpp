@@ -42,9 +42,9 @@ void Mesher::injectParameters(Parameters2 *parameters) {
 }
 
 void Mesher::on_changeCells_clicked() {
-    char type = ' ';
+    QString type = " ";
     if (ui->cellType->currentText() == "wall") {
-        type = 'w';
+        type = "w";
     }
     widget->getPainter()->getGrid()->alter(type, ui->minx->text().toInt() - 1, ui->maxx->text().toInt() - 1,
                                            ui->miny->text().toInt() - 1, ui->maxy->text().toInt() - 1,

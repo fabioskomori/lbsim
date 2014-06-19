@@ -25,7 +25,7 @@ class Grid;
 
 class LoaderFromImage {
 public:
-    static void load(Grid *grid, QString &fileName);
+    static void load(Grid *grid, QString &fileName, QString flags = "");
     static void save(Grid *grid, QString &fileName, int scale = 1);
     static QColor null;
     static QColor porous;
@@ -43,6 +43,7 @@ public:
     static QColor slipWall;
     static QColor depositionWall;
     static QColor reflectWithFactor;
+    static QColor kornerSolid, kornerLiquid, kornerGas, kornerInterface, kornerWall;
 };
 
 #endif // LOADERFROMIMAGE_H

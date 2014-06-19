@@ -60,11 +60,14 @@ public:
     void paintDetail(bool doPaint = true);
     void paintFlux(bool doPaint = true);
     void paintMacroFlux(bool doPaint = true);
+    void paintTemperature(bool doPaint = true);
     void paintPathLines();
     void paintForces();
     void paintColorBar();
     void paintPassiveScalar(bool doPaint = true);
     void paintHighlight();
+    void paintKorner(bool doPaint = true);
+    void paintTemp(bool doPaint = true);
     QString getStrategy();
     Camera* getCamera();
     void setStrategy(QString strategy);

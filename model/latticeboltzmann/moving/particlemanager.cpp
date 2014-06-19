@@ -53,7 +53,7 @@ void ParticleManager::transformSmallParticles() {
                                 if (moving->getParticle() == *mp) {
                                     smallParticles->push_back(*mp);
                                     removeOrphanParticles = false;
-                                    grid->alter(' ', j, j, i, i, k, k);
+                                    grid->alter(" ", j, j, i, i, k, k);
                                     removeOrphanParticles = true;
                                     break;
                                 }

@@ -56,6 +56,7 @@
 #include "moreinfo.h"
 #include "imageprocessing.h"
 #include "geometry.h"
+#include "ui_parameters2.h"
 
 using namespace std;
 
@@ -240,7 +241,7 @@ void LBMainWindow::load() {
     QString fileName = lastFileName;
     bool loaded = false;
     if (fileName.endsWith(".png")) {
-        LoaderFromImage::load(widget->getPainter()->getGrid(), fileName);
+        LoaderFromImage::load(widget->getPainter()->getGrid(), fileName, parameters->getUI()->activateKorner->isChecked() ? "korner" : "");
         loaded = true;
     } else if (fileName.endsWith(".txt") || fileName.endsWith(".lb")) {
         LoaderFromText::load(widget->getPainter()->getGrid(), fileName);
@@ -643,4 +644,64 @@ void LBMainWindow::on_actionImage_Processing_triggered() {
 
 void LBMainWindow::on_actionGeometry_triggered() {
     geometry->showMaximized();
+}
+
+void LBMainWindow::on_actionExec_2_it_triggered() {
+    for (int i = 0; i < 2; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_4_it_triggered() {
+    for (int i = 0; i < 4; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_8_it_triggered() {
+    for (int i = 0; i < 8; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_16_it_triggered() {
+    for (int i = 0; i < 16; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_32_it_triggered() {
+    for (int i = 0; i < 32; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_64_it_triggered() {
+    for (int i = 0; i < 64; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_128_it_triggered() {
+    for (int i = 0; i < 128; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_256_it_triggered() {
+    for (int i = 0; i < 256; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_512_it_triggered() {
+    for (int i = 0; i < 512; i++) {
+        on_actionNext_triggered();
+    }
+}
+
+void LBMainWindow::on_actionExec_1024_it_triggered() {
+    for (int i = 0; i < 1024; i++) {
+        on_actionNext_triggered();
+    }
 }

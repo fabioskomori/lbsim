@@ -26,6 +26,8 @@
 #include "../model/latticeboltzmann/physical/parameters.h"
 #include "../model/latticeboltzmann/gridconfig.h"
 #include "../model/latticeboltzmann/porouscell.h"
+#include "../model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.h"
+#include "../model/latticeboltzmann/meltingsolidification/kornerimplementation.h"
 #include <cstdlib>
 #include <QDebug>
 #include <QFileDialog>
@@ -80,6 +82,12 @@ Parameters2::Parameters2(QWidget *parent) : QDialog(parent), ui(new Ui::Paramete
     avoid_on_mcType_currentIndexChanged = false;
     avoid_on_mcQuantity_currentIndexChanged = false;
     material[0] = material[1] = 0;
+    //on_activateKorner_clicked();
+    ui->ebmPower->setAllowDecimal(true);
+    ui->ebmStdDev->setAllowDecimal(true);
+    ui->ebmVelocity->setAllowDecimal(true);
+    ui->ebmAbsorptionCoefficient->setAllowDecimal(true);
+    ui->mcDensityRatio->setAllowDecimal(true);
 }
 
 void Parameters2::load() {
@@ -626,4 +634,42 @@ void Parameters2::on_loadMaskPorousMedia_clicked() {
             }
         }
     }
+}
+
+void Parameters2::on_activateKorner_clicked() {
+    painter->getGrid()->getConfig()->setKorner(ui->activateKorner->isChecked());
+}
+
+void Parameters2::on_ebmPower_returnPressed() {
+    painter->getGrid()->getKorner()->configure(ui->ebmPower->text().toDouble(), ui->ebmStdDev->text().toDouble(), ui->ebmStartX->text().toInt(), ui->ebmVelocity->text().toDouble(), ui->ebmTimesteps->text().toInt(), ui->ebmAbsorptionCoefficient->text().toDouble());
+}
+
+void Parameters2::on_ebmStdDev_returnPressed() {
+    on_ebmPower_returnPressed();
+}
+
+void Parameters2::on_ebmStartX_returnPressed() {
+    on_ebmPower_returnPressed();
+}
+
+void Parameters2::on_ebmVelocity_returnPressed() {
+    on_ebmPower_returnPressed();
+}
+
+void Parameters2::on_ebmTimesteps_returnPressed() {
+    on_ebmPower_returnPressed();
+}
+
+void Parameters2::on_kornerSolidEnergy_returnPressed() {
+    painter->getGrid()->getKorner()->configureEnergy(ui->kornerSolidEnergy->text().toDouble(), ui->kornerLiquidEnergy->text().toDouble());
+}
+
+void Parameters2::on_kornerLiquidEnergy_returnPressed() {
+    on_kornerSolidEnergy_returnPressed();
+}
+
+void Parameters2::on_mcDensityRatio_returnPressed() {
+    //painter->getGrid()->getConfig()->setMCDensityRatio(ui->mcDensityRatio->text().toDouble());
+    painter->getGrid()->getConfig()->setDensity1(1);
+    painter->getGrid()->getConfig()->setDensity2(ui->mcDensityRatio->text().toDouble());
 }

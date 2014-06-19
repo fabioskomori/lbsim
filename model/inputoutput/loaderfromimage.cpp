@@ -48,6 +48,11 @@ QColor LoaderFromImage::dragWall = QColor(160, 160, 160);
 QColor LoaderFromImage::slipWall = QColor(96, 96, 96);
 QColor LoaderFromImage::depositionWall = QColor(32, 32, 32);
 QColor LoaderFromImage::reflectWithFactor = QColor(224, 224, 224);
+QColor LoaderFromImage::kornerGas = QColor(255, 0, 0);
+QColor LoaderFromImage::kornerLiquid = QColor(255, 255, 0);
+QColor LoaderFromImage::kornerSolid =  QColor(0, 0, 255);
+QColor LoaderFromImage::kornerInterface = QColor(255, 128, 0);
+QColor LoaderFromImage::kornerWall = QColor(128, 128, 128);
 
 void LoaderFromImage::save(Grid *grid, QString &fileName, int scale) {
     for (int z = 0; z < grid->getConfig()->getLength(); z++) {
@@ -88,7 +93,7 @@ void LoaderFromImage::save(Grid *grid, QString &fileName, int scale) {
     }
 }
 
-void LoaderFromImage::load(Grid *grid, QString &fileName) {
+void LoaderFromImage::load(Grid *grid, QString &fileName, QString flags) {
     int LENGTH = 1;
     while (true) {
         QString newFileName = fileName;
@@ -102,7 +107,7 @@ void LoaderFromImage::load(Grid *grid, QString &fileName) {
     image.load(fileName);
     int WIDTH = image.width();
     int HEIGHT = image.height();
-    char* data = new char[HEIGHT * WIDTH * LENGTH];
+    QString* data = new QString[HEIGHT * WIDTH * LENGTH];
     if (LENGTH > 1 && grid->getConfig()->getModel() == 9) {
         grid->getConfig()->setModel(19);
     }
@@ -114,40 +119,54 @@ void LoaderFromImage::load(Grid *grid, QString &fileName) {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 QColor color(image.pixel(j, HEIGHT - 1 - i));
-                if (color == wall) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'w';
-                } else if (color == movingWall) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'v';
-                } else if (color == source) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 's';
-                } else if (color == open) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'o';
-                } else if (color == moving) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'm';
-                } else if (color == negative) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'n';
-                } else if (color == positive) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'p';
-                } else if (color == porous) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = '*';
-                } else if (color == shallow) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'h';
-                } else if (color == null) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = '-';
-                } else if (color == point) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = '.';
-                } else if (color == thermal) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 't';
-                } else if (color == dragWall) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'd';
-                } else if (color == slipWall) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'k';
-                } else if (color == depositionWall) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'e';
-                } else if (color == reflectWithFactor) {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'r';
-                } else {
-                    data[k + j * LENGTH + i * LENGTH * WIDTH] = 'x';
+                if (flags == "") {
+                    if (color == wall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'w';
+                    } else if (color == movingWall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'v';
+                    } else if (color == source) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 's';
+                    } else if (color == open) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'o';
+                    } else if (color == moving) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'm';
+                    } else if (color == negative) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'n';
+                    } else if (color == positive) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'p';
+                    } else if (color == porous) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = '*';
+                    } else if (color == shallow) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'h';
+                    } else if (color == null) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = '-';
+                    } else if (color == point) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = '.';
+                    } else if (color == thermal) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 't';
+                    } else if (color == dragWall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'd';
+                    } else if (color == slipWall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'k';
+                    } else if (color == depositionWall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'e';
+                    } else if (color == reflectWithFactor) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'r';
+                    } else {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = 'x';
+                    }
+                } else if (flags == "korner") {
+                    if (color == kornerSolid) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = "korner_solid";
+                    } else if (color == kornerLiquid) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = "korner_liquid";
+                    } else if (color == kornerGas) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = "korner_gas";
+                    } else if (color == kornerInterface) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = "korner_interface";
+                    } else if (color == kornerWall) {
+                        data[k + j * LENGTH + i * LENGTH * WIDTH] = "korner_wall";
+                    }
                 }
             }
         }

@@ -90,23 +90,23 @@ void LoaderFromText::load(Grid *grid, QString &fileName) {
     int source, open, wall;
     int x, y, z;
     fs >> source;
-    char *data = new char[height * width * length];
+    QString *data = new QString[height * width * length];
     for (int i = 0; i < height * width * length; i++) {
-        data[i] = 'x';
+        data[i] = "x";
     }
     for (int i = 0; i < source; i++) {
         fs >> x >> y >> z;
-        data[z + x * length + y * length * width] = 's';
+        data[z + x * length + y * length * width] = "s";
     }
     fs >> open;
     for (int i = 0; i < open; i++) {
         fs >> x >> y >> z;
-        data[z + x * length + y * length * width] = 'o';
+        data[z + x * length + y * length * width] = "o";
     }
     fs >> wall;
     for (int i = 0; i < wall; i++) {
         fs >> x >> y >> z;
-        data[z + x * length + y * length * width] = 'w';
+        data[z + x * length + y * length * width] = "w";
     }
     grid->load(data, width, height, length);
     delete[] data;

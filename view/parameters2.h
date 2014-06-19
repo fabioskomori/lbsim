@@ -91,6 +91,8 @@ public slots:
     void on_regionAll_clicked();
     void on_regionCenter_clicked();
     void on_loadMaskPorousMedia_clicked();
+    void on_kornerSolidEnergy_returnPressed();
+    void on_kornerLiquidEnergy_returnPressed();
 private slots:
     void on_nanoFraction_returnPressed();
     void on_nanoDensity_returnPressed();
@@ -100,6 +102,13 @@ private slots:
     void on_nanoparticles_currentIndexChanged(const QString &arg1);
     void on_porousVariation_returnPressed();
     void on_updateConstant_clicked();
+    void on_activateKorner_clicked();
+    void on_ebmPower_returnPressed();
+    void on_ebmStdDev_returnPressed();
+    void on_ebmStartX_returnPressed();
+    void on_ebmVelocity_returnPressed();
+    void on_ebmTimesteps_returnPressed();
+    void on_mcDensityRatio_returnPressed();
 private:
     Ui::Parameters2 *ui;
     Painter *painter;

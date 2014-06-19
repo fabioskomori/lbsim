@@ -37,6 +37,7 @@
 #include "../../model/latticeboltzmann/moving/somethingmoving.h"
 #include "../../model/latticeboltzmann/moving/particlemanager.h"
 #include "../../model/latticeboltzmann/multi/mccell.h"
+#include "../../model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.h"
 #include "../../model/listener/listener.h"
 #include "../../model/math/myvector3d.h"
 #include "../../model/latticeboltzmann/thermal/thermalwall.h"
@@ -46,6 +47,7 @@
 #include "../../view/util/singleton.h"
 #include "../../model/latticeboltzmann/passivescalar/passivescalarsingleton.h"
 #include "../../model/latticeboltzmann/passivescalar/passivescalarcell.h"
+#include "../../model/inputoutput/loaderfromimage.h"
 #include <sstream>
 #include <typeinfo>
 #include <QDebug>
@@ -753,6 +755,71 @@ void Painter::paintPressure(bool doPaint) {
     }
 }
 
+void Painter::paintKorner(bool doPaint) {
+    minimumValue = 1e100; maximumValue = -1e100;
+    clearScalarField();
+    for (std::list<PainterCell*>::iterator cell = cellsList->begin(); cell != cellsList->end(); cell++) {
+        MeltingSolidificationCell *msc = dynamic_cast<MeltingSolidificationCell*>((*cell)->getCell());
+        if (msc != 0) {
+            QColor color;
+            switch (msc->getType()) {
+            case 'G':
+                color = LoaderFromImage::kornerGas;
+                break;
+            case 'L':
+                color = LoaderFromImage::kornerLiquid;
+                break;
+            case 'S':
+                color = LoaderFromImage::kornerSolid;
+                break;
+            case 'W':
+                color = LoaderFromImage::kornerWall;
+                break;
+            case 'I':
+                color = QColor(255, (int)((1.0 - msc->getP(0)) * 255), 0);
+                color = LoaderFromImage::kornerInterface;
+                break;
+            default:
+                break;
+            }
+            glColor3f(color.redF(), color.greenF(), color.blueF());
+            quad((*cell)->getC(), (*cell)->getCell(), (*cell)->getI(), (*cell)->getJ(), (*cell)->getK(), (*cell)->getOrientation(), (*cell)->getCell()->getP((*cell)->getC() - 1));
+        }
+    }
+}
+
+void Painter::paintTemperature(bool doPaint) {
+    minimumValue = 1e100; maximumValue = -1e100;
+    if (!doPaint) clearScalarField();
+    for (std::list<PainterCell*>::iterator cell = cellsList->begin(); cell != cellsList->end(); cell++) {
+        MeltingSolidificationCell *msc = dynamic_cast<MeltingSolidificationCell*>((*cell)->getCell());
+        if (msc != 0) {
+            if (color(msc->getP(1))) {
+                setScalarValue((*cell)->getJ(), (*cell)->getI(), (*cell)->getK(), msc->getP(1));
+                if (doPaint) {
+                    quad((*cell)->getC(), (*cell)->getCell(), (*cell)->getI(), (*cell)->getJ(), (*cell)->getK(), (*cell)->getOrientation(), msc->getP(1));
+                }
+            }
+        }
+    }
+}
+
+void Painter::paintTemp(bool doPaint) {
+    minimumValue = 1e100; maximumValue = -1e100;
+    if (!doPaint) clearScalarField();
+    for (std::list<PainterCell*>::iterator cell = cellsList->begin(); cell != cellsList->end(); cell++) {
+        MeltingSolidificationCell *msc = dynamic_cast<MeltingSolidificationCell*>((*cell)->getCell());
+        if (msc != 0) {
+            if (color(msc->getBeamEnergy())) {
+                setScalarValue((*cell)->getJ(), (*cell)->getI(), (*cell)->getK(), msc->getBeamEnergy());
+                if (doPaint) {
+                    quad((*cell)->getC(), (*cell)->getCell(), (*cell)->getI(), (*cell)->getJ(), (*cell)->getK(), (*cell)->getOrientation(), msc->getBeamEnergy());
+                }
+            }
+        }
+    }
+}
+
 void Painter::paintPermeability(bool doPaint) {
     minimumValue = 1e100; maximumValue = -1e100;
     if (!doPaint) clearScalarField();
@@ -1073,6 +1140,12 @@ void Painter::setStrategy(QString strategy) {
         painter = &Painter::paintFlux;
     } else if (strategy == "macroflux") {
         painter = &Painter::paintMacroFlux;
+    } else if (strategy == "korner") {
+        painter = &Painter::paintKorner;
+    } else if (strategy == "temp") {
+        painter = &Painter::paintTemp;
+    } else if (strategy == "temperature") {
+        painter = &Painter::paintTemperature;
     }
     isolinesRepaint = true;
 }

@@ -45,6 +45,7 @@
 #include "../../model/math/vector3i.h"
 #include "../../model/listener/listener.h"
 #include "thermal/thermalwall.h"
+#include "meltingsolidification/meltingsolidificationcell.h"
 #include "interpolation/interpolationcell.h"
 #include <typeinfo>
 #include <cstdlib>
@@ -63,6 +64,7 @@
 #include "passivescalar/passivescalarsingleton.h"
 #include "passivescalar/momentpropagationcell.h"
 #include "boundary/reflectwithfactorcell.h"
+#include "meltingsolidification/kornerimplementation.h"
 #include <cmath>
 
 #define FILES 10
@@ -100,6 +102,7 @@ Grid::Grid() {
     lastOpenclUpdate = 0;
     fluxes = 0;
     fluxCalculated = false;
+    korner = new KornerImplementation(this);
 }
 
 Grid::~Grid() {
@@ -111,6 +114,7 @@ Grid::~Grid() {
     delete parameters;
     delete velocityField;
     //delete opencl;
+    delete korner;
 }
 
 void Grid::init(int width, int height, int length, bool dontDelete) {
@@ -162,12 +166,12 @@ void Grid::randomP() {
     }
 }
 
-void Grid::load(char *data, int width, int height, int length) {
+void Grid::load(QString *data, int width, int height, int length) {
     init(width, height, length);
     for (int i = 0; i < config->getHeight(); i++) {
         for (int j = 0; j < config->getWidth(); j++) {
             for (int k = 0; k < config->getLength(); k++) {
-                char lattice = data[k + j * config->getLength() + i * config->getLength() * config->getWidth()];
+                QString lattice = data[k + j * config->getLength() + i * config->getLength() * config->getWidth()];
                 alter(lattice, j, j, i, i, k, k);
             }
         }
@@ -195,45 +199,65 @@ void Grid::resize(int factor) {
     processNeighbors();
 }
 
-void Grid::alter(char type, int minx, int maxx, int miny, int maxy, int minz, int maxz, bool seeNeighbors) {
+void Grid::alter(QString type, int minx, int maxx, int miny, int maxy, int minz, int maxz, bool seeNeighbors) {
     for (int i = miny; i <= maxy; i++) {
         for (int j = minx; j <= maxx; j++) {
             for (int k = minz; k <= maxz; k++) {
-                if (type == 'w') {
+                if (type == "korner_solid") {
+                    MeltingSolidificationCell *cell = new MeltingSolidificationCell(korner);
+                    cell->setType('S');
+                    setGrid(i, j, k, cell);
+                } else if (type == "korner_liquid") {
+                    MeltingSolidificationCell *cell = new MeltingSolidificationCell(korner);
+                    cell->setType('L');
+                    setGrid(i, j, k, cell);
+                } else if (type == "korner_gas") {
+                    MeltingSolidificationCell *cell = new MeltingSolidificationCell(korner);
+                    cell->setType('G');
+                    setGrid(i, j, k, cell);
+                } else if (type == "korner_interface") {
+                    MeltingSolidificationCell *cell = new MeltingSolidificationCell(korner);
+                    cell->setType('I');
+                    setGrid(i, j, k, cell);
+                } else if (type == "korner_wall") {
+                    MeltingSolidificationCell *cell = new MeltingSolidificationCell(korner);
+                    cell->setType('W');
+                    setGrid(i, j, k, cell);
+                } else if (type == "w") {
                     setGrid(i, j, k, new WallCell());
-                } else if (type == 'v') {
+                } else if (type == "v") {
                     MovingCell *moving = new MovingCell(config->randomP(), 0, this);
                     moving->setParticle(new MovingWall(config->getWallVelocity()));
                     setGrid(i, j, k, moving);
-                } else if (type == 's') {
+                } else if (type == "s") {
                     //setGrid(i, j, k, SourceCell::createEquilibrium(config->getSourceVelocity(0), config->getMinP0(), config->getModel()));
                     setGrid(i, j, k, SourceCell::createFixed(config->getSourceVelocity(0), config->getMinP0()));
-                } else if (type == 'o') {
+                } else if (type == "o") {
                     //setGrid(i, j, k, OpenCell::createEquilibrium(config->getMinP0(), config->getModel()));
                     setGrid(i, j, k, OpenCell::createExtrapolation(config->getModel()));
-                } else if (type == 'm') {
+                } else if (type == "m") {
                     setGrid(i, j, k, new MovingCell(config->randomP(), 0, this));
-                } else if (type == 'p') {
+                } else if (type == "p") {
                     setGrid(i, j, k, new MovingCell(config->randomP(), 1, this));
-                } else if (type == 'n') {
+                } else if (type == "n") {
                     setGrid(i, j, k, new MovingCell(config->randomP(), -1, this));
-                } else if (type == '*') {
+                } else if (type == "*") {
                     setGrid(i, j, k, new PorousCell(config->randomP()));
-                } else if (type == 'h') {
+                } else if (type == "h") {
                     setGrid(i, j, k, new ShallowCell());
-                } else if (type == '-') {
+                } else if (type == "-") {
                     setGrid(i, j, k, new NullCell());
-                } else if (type == '.') {
+                } else if (type == ".") {
                     setGrid(i, j, k, SourceCell::createPoint(config->getSourcePressure(0)));
-                } else if (type == 't') {
+                } else if (type == "t") {
                     setGrid(i, j, k, new ThermalWall());
-                } else if (type == 'd') {
+                } else if (type == "d") {
                     setGrid(i, j, k, new DragWallCell());
-                } else if (type == 'k') {
+                } else if (type == "k") {
                     setGrid(i, j, k, new PartialSlipBoundary());
-                } else if (type == 'e') {
+                } else if (type == "e") {
                     setGrid(i, j, k, new DepositionWall());
-                } else if (type == 'r') {
+                } else if (type == "r") {
                     setGrid(i, j, k, new ReflectWithFactorCell());
                 } else if (seeNeighbors) {
                     double p1 = 0, p2 = 0;
@@ -303,7 +327,7 @@ void Grid::porous(int percent) {
                 BaseCell *cell = getGrid(i, j, k);
                 if (cell->isFluid()) {
                     if (rand() % 100 < percent) {
-                        alter('w', j, j, i, i, k, k);
+                        alter("w", j, j, i, i, k, k);
                     }
                 }
             }
@@ -466,6 +490,7 @@ int Grid::update(int steps) {
                 for (int i = 0; i < steps; i++) {
                     process(0);
                     particleManager->preUpdate();
+                    korner->preUpdate();
                     process(1);
                     simulation->resetDeltaP();
                     simulation->resetTotalP();
@@ -1163,4 +1188,8 @@ bool Grid::isRunning() {
     bool temp = (config->getMaxIterations() == 0 || simulation->getIterations() < config->getMaxIterations()) &&
             (simulation->getIterations() == 0 || config->getStopCriterion() == 0 || simulation->getDeltaP() * simulation->getDeltasP() / simulation->getTotalP() >= config->getStopCriterion());
     return temp;
+}
+
+KornerImplementation* Grid::getKorner() {
+    return korner;
 }

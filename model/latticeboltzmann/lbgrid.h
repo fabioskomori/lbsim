@@ -41,14 +41,15 @@ class LatticeBoltzmannOpenCL;
 class LBOCL;
 class OpenCLDevice;
 class Allocation;
+class KornerImplementation;
 
 class Grid {
 public:
     Grid();
     ~Grid();
     void init(int width, int height, int length, bool dontDelete = false);
-    void load(char *data, int width, int height, int length);
-    void alter(char type, int minx, int maxx, int miny, int maxy, int minz, int maxz, bool seeNeighbors = false);
+    void load(QString *data, int width, int height, int length);
+    void alter(QString type, int minx, int maxx, int miny, int maxy, int minz, int maxz, bool seeNeighbors = false);
     void resize(int factor);
     void pressure(int minx, int maxx, int miny, int maxy, int minz, int maxz, double p1, double p2);
     void porous(int percent);
@@ -85,6 +86,7 @@ public:
     void randomP();
     MyVector3D getFlux(int x, int y, int z);
     MyVector3D* getFlux();
+    KornerImplementation* getKorner();
 protected:
 private:
     //LBOCL *opencl;
@@ -103,6 +105,7 @@ private:
     std::map<int, Listener*> listeners;
     MyVector3D *fluxes;
     bool fluxCalculated;
+    KornerImplementation *korner;
 };
 
 #endif // GRID_H

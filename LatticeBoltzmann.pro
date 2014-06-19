@@ -220,7 +220,9 @@ SOURCES += \
     view/moreinfo.cpp \
     model/latticeboltzmann/passivescalar/momentpropagationcell.cpp \
     view/imageprocessing.cpp \
-    view/geometry.cpp
+    view/geometry.cpp \
+    model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.cpp \
+    model/latticeboltzmann/meltingsolidification/kornerimplementation.cpp
 HEADERS += \
     view/lbmainwindow.h \
     view/lbwidget.h \
@@ -432,7 +434,9 @@ HEADERS += \
     view/moreinfo.h \
     model/latticeboltzmann/passivescalar/momentpropagationcell.h \
     view/imageprocessing.h \
-    view/geometry.h
+    view/geometry.h \
+    model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.h \
+    model/latticeboltzmann/meltingsolidification/kornerimplementation.h
 FORMS += \
     view/lbmainwindow.ui \
     view/info.ui \

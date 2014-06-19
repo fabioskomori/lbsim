@@ -79,6 +79,11 @@
    </item>
    <item>
     <property name="text">
+     <string>temperature</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>arrow</string>
     </property>
    </item>
@@ -130,6 +135,16 @@
    <item>
     <property name="text">
      <string>macroflux</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>korner</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>temp</string>
     </property>
    </item>
   </widget>

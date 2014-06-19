@@ -41,6 +41,7 @@
 #include <cmath>
 #include <QDebug>
 #include "force/forcelist.h"
+#include "meltingsolidification/meltingsolidificationcell.h"
 
 GridConfig::GridConfig(Grid *grid) {
     HEIGHT = 10, WIDTH = 10, LENGTH = 10;
@@ -89,6 +90,7 @@ GridConfig::GridConfig(Grid *grid) {
     nanoEpsilon0 = epsilons[0];
     nanoEpsilon1 = epsilons[1];
     nanoBeta = thermalExpansion;
+    korner = false;
 }
 
 GridConfig::~GridConfig() {
@@ -262,7 +264,7 @@ void GridConfig::setMulticomponent(int quantity, double g, double gads1, double 
                 }
                 if (cell->isFluid()) {
                     if (quantity == 1) {
-                        if (dynamic_cast<SCCell*>(cell) == 0 && dynamic_cast<ShallowCell*>(cell) == 0 && dynamic_cast<PorousCell*>(cell) == 0) {
+                        if (dynamic_cast<SCCell*>(cell) == 0 && dynamic_cast<ShallowCell*>(cell) == 0 && dynamic_cast<PorousCell*>(cell) == 0 && dynamic_cast<MeltingSolidificationCell*>(cell) == 0) {
                             grid->setGrid(i, j, k, new SCCell(randomP()));
                         }
                     } else {
@@ -904,6 +906,12 @@ void GridConfig::updateNano() {
     nanoEpsilon0 = 0.5 + (epsilons[0] - 0.5) / (pow(1 - nanoFraction, 2.5) * (1 - nanoFraction + nanoFraction * nanoDensity));
     nanoBeta = thermalExpansion * (1 - nanoFraction + nanoFraction * nanoDensity * nanoThermalExpansion) / (1 - nanoFraction + nanoFraction * nanoDensity);
     nanoEpsilon1 = 0.5 + (epsilons[1] - 0.5) * ((2 + nanoThermalConductivity - 2 * nanoFraction + 2 * nanoFraction * nanoThermalConductivity) / (2 + nanoThermalConductivity + nanoFraction - nanoFraction * nanoThermalConductivity)) / (1 - nanoFraction + nanoFraction * nanoDensity * nanoHeatCapacitance);
-    /*qDebug() << "dPr = " << ((nanoEpsilon0 - 0.5) / (nanoEpsilon1 - 0.5)) / ((epsilons[0] - 0.5) / (epsilons[1] - 0.5));
-    qDebug() << "dRa = " << (nanoBeta / ((nanoEpsilon0 - 0.5) * (nanoEpsilon1 - 0.5))) / (thermalExpansion / ((epsilons[0] - 0.5) * (epsilons[1] - 0.5)));*/
+}
+
+void GridConfig::setKorner(bool korner) {
+    this->korner = korner;
+}
+
+bool GridConfig::getKorner() {
+    return korner;
 }

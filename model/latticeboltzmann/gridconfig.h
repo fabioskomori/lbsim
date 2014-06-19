@@ -141,6 +141,8 @@ public:
     double getNanoEpsilon1();
     double getNanoBeta();
     double getNanoDensity();
+    void setKorner(bool korner);
+    bool getKorner();
 private:
     void removeForce(std::type_info toRemove);
     void updateNano();
@@ -182,6 +184,7 @@ private:
     double reflectWithFactor;
     double nanoFraction, nanoDensity, nanoThermalExpansion, nanoThermalConductivity, nanoHeatCapacitance;
     double nanoEpsilon0, nanoEpsilon1, nanoBeta;
+    bool korner;
 };
 
 #endif // GRIDCONFIG_H

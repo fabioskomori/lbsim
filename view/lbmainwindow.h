@@ -145,6 +145,17 @@ public slots:
     void on_actionLoad_All_v3_triggered();
     void on_actionImage_Processing_triggered();
     void on_actionGeometry_triggered();
+private slots:
+    void on_actionExec_2_it_triggered();
+    void on_actionExec_4_it_triggered();
+    void on_actionExec_8_it_triggered();
+    void on_actionExec_16_it_triggered();
+    void on_actionExec_32_it_triggered();
+    void on_actionExec_64_it_triggered();
+    void on_actionExec_128_it_triggered();
+    void on_actionExec_256_it_triggered();
+    void on_actionExec_512_it_triggered();
+    void on_actionExec_1024_it_triggered();
 };
 
 #endif // MAINWINDOW_H
