@@ -107,13 +107,14 @@ void Parameters2::load() {
     ui->slipCoefficient->setText(QString::number(painter->getGrid()->getConfig()->getSlipWallCoefficient()));
     ui->thermalExpansion->setText(QString::number(painter->getGrid()->getConfig()->getThermalExpansion()));
     ui->depositionRate->setText(QString::number(painter->getGrid()->getConfig()->getDepositionRate()));
-    if (painter->getGrid()->getConfig()->getGravity() < 1e-100 || painter->getGrid()->getConfig()->getGravity() > 1e-100) {
-        ui->gravityEnable->setChecked(false);
-        on_gravityEnable_clicked();
-    } else {
+    qDebug() << "gravity: " << painter->getGrid()->getConfig()->getGravity();
+    if (painter->getGrid()->getConfig()->getGravity() < -1e-100 || painter->getGrid()->getConfig()->getGravity() > 1e-100) {
         ui->gravityEnable->setChecked(true);
         on_gravityEnable_clicked();
         ui->gravity->setText(QString::number(painter->getGrid()->getConfig()->getGravity(), 'g', 12));
+    } else {
+        ui->gravityEnable->setChecked(false);
+        on_gravityEnable_clicked();
     }
     double mpG, mpPsi0, mpP0, mpGads;
     painter->getGrid()->getConfig()->getMultiphase(&mpG, &mpPsi0, &mpP0, &mpGads);
@@ -174,6 +175,7 @@ void Parameters2::load() {
             ui->externalForcePeriod->setText(QString::number(f->getPeriod()));
         }
     }
+    ui->mcDensityRatio->setText(QString::number(painter->getGrid()->getConfig()->getDensity2()));
 }
 
 Parameters2::~Parameters2() {
