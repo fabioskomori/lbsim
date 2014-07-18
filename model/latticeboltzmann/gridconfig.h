@@ -40,6 +40,7 @@ class Force;
 #include "../../model/math/myvector3d.h"
 #include "../../model/math/vector3i.h"
 #include <list>
+#include <QString>
 
 class GridConfig {
 public:
@@ -143,6 +144,8 @@ public:
     double getNanoDensity();
     void setKorner(bool korner);
     bool getKorner();
+    void setInletFormula(int index, QString formula);
+    QString getInletFormula(int index);
 private:
     void removeForce(std::type_info toRemove);
     void updateNano();
@@ -185,6 +188,7 @@ private:
     double nanoFraction, nanoDensity, nanoThermalExpansion, nanoThermalConductivity, nanoHeatCapacitance;
     double nanoEpsilon0, nanoEpsilon1, nanoBeta;
     bool korner;
+    QString inletFormula[3];
 };
 
 #endif // GRIDCONFIG_H

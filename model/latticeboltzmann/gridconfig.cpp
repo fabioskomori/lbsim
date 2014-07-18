@@ -915,3 +915,11 @@ void GridConfig::setKorner(bool korner) {
 bool GridConfig::getKorner() {
     return korner;
 }
+
+void GridConfig::setInletFormula(int index, QString formula) {
+    inletFormula[index] = formula;
+}
+
+QString GridConfig::getInletFormula(int index) {
+    return inletFormula[index];
+}

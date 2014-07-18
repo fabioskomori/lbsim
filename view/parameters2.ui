@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -938,8 +938,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QGroupBox" name="groupBox_10">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>90</y>
+       <x>180</x>
+       <y>10</y>
        <width>151</width>
        <height>121</height>
       </rect>
@@ -1067,9 +1067,9 @@ p, li { white-space: pre-wrap; }
     <widget class="QGroupBox" name="groupBox_11">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>10</y>
-       <width>291</width>
+       <x>10</x>
+       <y>140</y>
+       <width>481</width>
        <height>71</height>
       </rect>
      </property>
@@ -1200,12 +1200,35 @@ p, li { white-space: pre-wrap; }
        <string>1</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_77">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>20</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Formula:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="inletFormula">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>40</y>
+        <width>181</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_12">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>90</y>
+       <x>340</x>
+       <y>10</y>
        <width>151</width>
        <height>121</height>
       </rect>

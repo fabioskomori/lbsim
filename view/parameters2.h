@@ -93,6 +93,7 @@ public slots:
     void on_loadMaskPorousMedia_clicked();
     void on_kornerSolidEnergy_returnPressed();
     void on_kornerLiquidEnergy_returnPressed();
+    void on_inletFormula_textEdited(const QString &arg1);
 private slots:
     void on_nanoFraction_returnPressed();
     void on_nanoDensity_returnPressed();

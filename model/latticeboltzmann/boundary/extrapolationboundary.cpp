@@ -39,7 +39,7 @@ ExtrapolationBoundary::ExtrapolationBoundary() {
 void ExtrapolationBoundary::preUpdate(double[], BaseCell*[], Grid*, Vector3i) {
 }
 
-void ExtrapolationBoundary::preUpdate2(double[], BaseCell* neighbors[], Grid *grid, Vector3i) {
+void ExtrapolationBoundary::preUpdate2(double[], BaseCell* neighbors[], Grid *grid, Vector3i p) {
     BaseCell *empty = 0;
     int is[9];
     int m = Shared::instance()->getGridConfig()->getModel();
@@ -50,13 +50,13 @@ void ExtrapolationBoundary::preUpdate2(double[], BaseCell* neighbors[], Grid *gr
             is[0] = 1; is[1] = 2; is[2] = 8; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
         } else if (neighbors[1] == 0 || (!neighbors[1]->isFluid() && neighbors[5]->isFluid())) {
             empty = neighbors[5];
-            is[0] = 4; is[1] = 5; is[2] = 6; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
+            is[0] = 5; is[1] = 4; is[2] = 6; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
         } else if (neighbors[7] == 0 || (!neighbors[7]->isFluid() && neighbors[3]->isFluid())) {
             empty = neighbors[3];
-            is[0] = 2; is[1] = 3; is[2] = 4; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
+            is[0] = 3; is[1] = 2; is[2] = 4; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
         } else if (neighbors[3] == 0 || (!neighbors[3]->isFluid() && neighbors[7]->isFluid())) {
             empty = neighbors[7];
-            is[0] = 6; is[1] = 7; is[2] = 8; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
+            is[0] = 7; is[1] = 6; is[2] = 8; is[3] = -1; is[4] = -1; is[5] = -1; is[6] = -1; is[7] = -1; is[8] = -1;
         }
         break;
     case 15:
@@ -125,9 +125,13 @@ void ExtrapolationBoundary::preUpdate2(double[], BaseCell* neighbors[], Grid *gr
                 if (type == MC_PS) {
                     empty->setNextF(is[i], LBUtil::W[m][is[i]] * residual, 1);
                 } else {
-                    empty->setNextF(is[i], empty->getF(is[i], 1), 1);
+                    //empty->setNextF(is[i], empty->getF(is[i], 1), 1);
+                    /*empty->setNextF(is[i], 2 * grid->getGrid(p.getY() + LBUtil::C[m][is[0]].getY(), p.getX() + LBUtil::C[m][is[0]].getX(), p.getZ() + LBUtil::C[m][is[0]].getZ())->getF(is[i], 1) - grid->getGrid(p.getY() + 2 * LBUtil::C[m][is[0]].getY(), p.getX() + 2 * LBUtil::C[m][is[0]].getX(), p.getZ() + 2 * LBUtil::C[m][is[0]].getZ())->getF(is[i], 1), 1);*/
+                    empty->setNextF(is[i], grid->getGrid(p.getY() + LBUtil::C[m][is[0]].getY(), p.getX() + LBUtil::C[m][is[0]].getX(), p.getZ() + LBUtil::C[m][is[0]].getZ())->getF(is[i], 1), 1);
                 }
-                empty->setNextF(is[i], empty->getF(is[i], 0), 0);
+                //empty->setNextF(is[i], empty->getF(is[i], 0), 0);
+                /*empty->setNextF(is[i], 2 * grid->getGrid(p.getY() + LBUtil::C[m][is[0]].getY(), p.getX() + LBUtil::C[m][is[0]].getX(), p.getZ() + LBUtil::C[m][is[0]].getZ())->getF(is[i], 0) - grid->getGrid(p.getY() + 2 * LBUtil::C[m][is[0]].getY(), p.getX() + 2 * LBUtil::C[m][is[0]].getX(), p.getZ() + 2 * LBUtil::C[m][is[0]].getZ())->getF(is[i], 0), 0);*/
+                empty->setNextF(is[i], grid->getGrid(p.getY() + LBUtil::C[m][is[0]].getY(), p.getX() + LBUtil::C[m][is[0]].getX(), p.getZ() + LBUtil::C[m][is[0]].getZ())->getF(is[i], 0), 0);
             }
         }
     }

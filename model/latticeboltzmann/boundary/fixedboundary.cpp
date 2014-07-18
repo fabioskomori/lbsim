@@ -29,6 +29,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include "../../../model/util/shared.h"
+#include <QScriptEngine>
 
 #define PI 3.14159265
 
@@ -42,7 +43,12 @@ FixedBoundary::FixedBoundary() {
     multiComponentIndex = 0;
 }
 
-void FixedBoundary::preUpdate(double[], BaseCell*[], Grid*, Vector3i) {
+void FixedBoundary::preUpdate(double[], BaseCell*[], Grid *grid, Vector3i) {
+    if (grid->getConfig()->getInletFormula(multiComponentIndex) != "") {
+        QScriptEngine engine;
+        double factor = engine.evaluate(QString("function it() { return " + QString::number(grid->getSimulation()->getIterations()) + "; } ").append(grid->getConfig()->getInletFormula(multiComponentIndex))).toString().toDouble();
+        velocity = factor * grid->getConfig()->getSourceVelocity(multiComponentIndex);
+    }
 }
 
 void FixedBoundary::preUpdate2(double[], BaseCell* neighbors[], Grid *grid, Vector3i) {

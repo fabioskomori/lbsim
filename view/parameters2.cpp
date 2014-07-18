@@ -107,7 +107,6 @@ void Parameters2::load() {
     ui->slipCoefficient->setText(QString::number(painter->getGrid()->getConfig()->getSlipWallCoefficient()));
     ui->thermalExpansion->setText(QString::number(painter->getGrid()->getConfig()->getThermalExpansion()));
     ui->depositionRate->setText(QString::number(painter->getGrid()->getConfig()->getDepositionRate()));
-    qDebug() << "gravity: " << painter->getGrid()->getConfig()->getGravity();
     if (painter->getGrid()->getConfig()->getGravity() < -1e-100 || painter->getGrid()->getConfig()->getGravity() > 1e-100) {
         ui->gravityEnable->setChecked(true);
         on_gravityEnable_clicked();
@@ -674,4 +673,8 @@ void Parameters2::on_mcDensityRatio_returnPressed() {
     //painter->getGrid()->getConfig()->setMCDensityRatio(ui->mcDensityRatio->text().toDouble());
     painter->getGrid()->getConfig()->setDensity1(1);
     painter->getGrid()->getConfig()->setDensity2(ui->mcDensityRatio->text().toDouble());
+}
+
+void Parameters2::on_inletFormula_textEdited(const QString &arg1) {
+    painter->getGrid()->getConfig()->setInletFormula(ui->inletOrder->currentIndex(), ui->inletFormula->text());
 }
