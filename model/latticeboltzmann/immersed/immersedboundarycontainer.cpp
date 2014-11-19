@@ -54,7 +54,7 @@ void ImmersedBoundaryContainer::preUpdate1() {
 
 void ImmersedBoundaryContainer::preUpdate2(int x, int y, int z) {
     BaseCell *cell = grid->getGrid(y, x, z);
-    if (cell->isFluid()) {
+    if (items->size() > 0 && cell->isFluid()) {
         MyVector3D f = MyVector3D();
         for (std::list<MyTwoVector3D>::iterator force = forces.begin(); force != forces.end(); force++) {
             f = f + ((*force).getV2() ^ Util::dirac(std::sqrt(MyVector3D(x, y, z).distance2((*force).getV1()))));
