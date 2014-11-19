@@ -68,6 +68,7 @@ public:
     void paintHighlight();
     void paintKorner(bool doPaint = true);
     void paintTemp(bool doPaint = true);
+    void paintImmersed();
     QString getStrategy();
     Camera* getCamera();
     void setStrategy(QString strategy);

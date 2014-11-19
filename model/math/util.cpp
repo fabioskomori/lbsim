@@ -18,6 +18,9 @@
 
 #include "util.h"
 #include <QDebug>
+#include <cmath>
+
+#define PI 3.14159265
 
 Util::Util() {
 }
@@ -27,4 +30,14 @@ double Util::interpolate(double x1, double x2, double value) {
         return -1;
     }
     return (value - x1) / (x2 - x1);
+}
+
+double Util::dirac(double x) {
+    if (x < 0) {
+        x = -x;
+    }
+    if (x > 2) {
+        return 0;
+    }
+    return 0.25 * (1 + std::cos(PI * x / 2));
 }

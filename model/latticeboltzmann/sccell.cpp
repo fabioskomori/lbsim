@@ -103,6 +103,10 @@ void SCCell::preUpdate(double epsilon[], BaseCell* neighbors[], Grid *grid, Vect
     //LBUtil::update(model, epsilon, neighbors, nextF);
 }
 
+void SCCell::setForcesVelocity(MyVector3D forcesVelocity) {
+    this->forcesVelocity = forcesVelocity;
+}
+
 void SCCell::preUpdate2(double[], BaseCell*[], Grid*, Vector3i) {
 }
 

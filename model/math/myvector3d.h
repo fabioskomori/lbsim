@@ -41,6 +41,7 @@ public:
     MyVector3D normalize();
     MyVector3D log();
     Vector3i toVector3i();
+    MyVector3D rotate2D(MyVector3D center, double rotation);
     double distance2(MyVector3D v);
     double norm();
     double norm2();

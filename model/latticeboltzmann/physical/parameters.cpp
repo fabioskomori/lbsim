@@ -83,6 +83,7 @@ void Parameters::activate(QXmlStreamReader &reader) {
     dx = reader.attributes().value("dx").toString().toDouble();
     dt = reader.attributes().value("dt").toString().toDouble();
     dm = reader.attributes().value("dm").toString().toDouble();
+    do { reader.readNext(); } while (!reader.isStartElement() && !reader.isEndDocument());
 }
 
 void Parameters::passivate(QXmlStreamWriter &writer) {

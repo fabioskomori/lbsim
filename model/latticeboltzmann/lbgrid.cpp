@@ -43,6 +43,7 @@
 #include "extra/velocityfield.h"
 #include "../../model/math/myvector3d.h"
 #include "../../model/math/vector3i.h"
+#include "../../model/math/util.h"
 #include "../../model/listener/listener.h"
 #include "thermal/thermalwall.h"
 #include "meltingsolidification/meltingsolidificationcell.h"
@@ -66,6 +67,8 @@
 #include "boundary/reflectwithfactorcell.h"
 #include "meltingsolidification/kornerimplementation.h"
 #include <cmath>
+#include "immersed/immersedboundarycontainer.h"
+#include <QDebug>
 
 #define FILES 10
 
@@ -103,6 +106,7 @@ Grid::Grid() {
     fluxes = 0;
     fluxCalculated = false;
     korner = new KornerImplementation(this);
+    immersed = new ImmersedBoundaryContainer(this);
 }
 
 Grid::~Grid() {
@@ -115,6 +119,7 @@ Grid::~Grid() {
     delete velocityField;
     //delete opencl;
     delete korner;
+    delete immersed;
 }
 
 void Grid::init(int width, int height, int length, bool dontDelete) {
@@ -377,6 +382,7 @@ struct Scaled {
                 for (int k = 0; k < grid->getConfig()->getLength(); k++) {
                     //if (dynamic_cast<MovingCell*>(grid->getGrid(i, j, k)) == 0) {
                         grid->getGrid(i, j, k)->preUpdate2(grid->getConfig()->getEpsilons(), &neighborsCache[k * grid->getConfig()->getModel() + j * grid->getConfig()->getLength() * grid->getConfig()->getModel() + i * grid->getConfig()->getLength() * grid->getConfig()->getWidth() * grid->getConfig()->getModel()], grid, Vector3i(j, i, k));
+                        grid->getImmersed()->preUpdate2(j, i, k);
                     //}
                 }
             }
@@ -491,6 +497,7 @@ int Grid::update(int steps) {
                     process(0);
                     particleManager->preUpdate();
                     korner->preUpdate();
+                    immersed->preUpdate1();
                     process(1);
                     simulation->resetDeltaP();
                     simulation->resetTotalP();
@@ -847,6 +854,9 @@ void Grid::passivate(QXmlStreamWriter &writer, int version, QString fileName, in
     writer.writeStartElement("parameters");
     parameters->passivate(writer);
     writer.writeEndElement();
+    writer.writeStartElement("immersedBoundary");
+    immersed->passivate(writer);
+    writer.writeEndElement();
 }
 
 BaseCell* Grid::activateCell(QXmlStreamReader &reader) {
@@ -970,6 +980,7 @@ void Grid::activate(QXmlStreamReader &reader, int version, QString fileName) {
     config->activate(reader);
     velocityField->activate(reader);
     parameters->activate(reader);
+    immersed->activate(reader);
     do { reader.readNext(); } while (!reader.isStartElement() && !reader.isEndDocument());
 }
 
@@ -1125,6 +1136,21 @@ void Grid::optimize() {
     }
 }
 
+MyVector3D Grid::interpolateVelocity(double x, double y) {
+    int rx = round(x);
+    int ry = round(y);
+    MyVector3D u = MyVector3D();
+    for (int tx = rx - 2; tx <= rx + 2; tx++) {
+        for (int ty = ry - 2; ty <= ry + 2; ty++) {
+            BaseCell *cell = getGrid(ty, tx, 0);
+            if (cell != 0) {
+                u = u + (cell->getU(0) ^ (Util::dirac(tx - x) * Util::dirac(ty - y)));
+            }
+        }
+    }
+    return u;
+}
+
 MyVector3D Grid::getFlux(int x, int y, int z) {
     int RESOLUTION = 100;
     BaseCell *cell = getGrid(y, x, 0);
@@ -1192,4 +1218,8 @@ bool Grid::isRunning() {
 
 KornerImplementation* Grid::getKorner() {
     return korner;
+}
+
+ImmersedBoundaryContainer* Grid::getImmersed() {
+    return immersed;
 }

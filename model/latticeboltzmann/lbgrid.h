@@ -42,6 +42,7 @@ class LBOCL;
 class OpenCLDevice;
 class Allocation;
 class KornerImplementation;
+class ImmersedBoundaryContainer;
 
 class Grid {
 public:
@@ -87,6 +88,8 @@ public:
     MyVector3D getFlux(int x, int y, int z);
     MyVector3D* getFlux();
     KornerImplementation* getKorner();
+    ImmersedBoundaryContainer* getImmersed();
+    MyVector3D interpolateVelocity(double x, double y);
 protected:
 private:
     //LBOCL *opencl;
@@ -106,6 +109,7 @@ private:
     MyVector3D *fluxes;
     bool fluxCalculated;
     KornerImplementation *korner;
+    ImmersedBoundaryContainer *immersed;
 };
 
 #endif // GRID_H

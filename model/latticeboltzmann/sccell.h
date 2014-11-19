@@ -53,6 +53,7 @@ public:
     void updateFromOpenCL(double *data);
     BaseCell* clone();
     void setConstantConcentration(double constantConcentration);
+    void setForcesVelocity(MyVector3D forcesVelocity);
 protected:
     double gamma(double h, double cacheF0[], double min, double max, int step);
     double *f, *nextF;

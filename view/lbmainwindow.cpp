@@ -57,6 +57,7 @@
 #include "imageprocessing.h"
 #include "geometry.h"
 #include "ui_parameters2.h"
+#include "immersed.h"
 
 using namespace std;
 
@@ -103,6 +104,8 @@ LBMainWindow::LBMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::LB
     mesher->injectParameters(parameters);
     moreInfo = new MoreInfo(this);
     moreInfo->inject(widget->getPainter()->getGrid());
+    immersed = new Immersed(this);
+    immersed->inject(widget);
     imageProcessing = new ImageProcessing(this);
     geometry = new Geometry(this);
     serverRunning = false;
@@ -155,6 +158,7 @@ LBMainWindow::~LBMainWindow() {
     delete moreInfo;
     delete imageProcessing;
     delete geometry;
+    delete immersed;
 }
 
 Parameters2* LBMainWindow::getParameters() {
@@ -452,6 +456,7 @@ void LBMainWindow::loadAll2(int version) {
         do { reader.readNext(); } while (!reader.isStartElement() && !reader.isEndDocument());
     }
     interpolation->load(reader);
+    immersed->sync();
     //opencl->load(reader);
     widget->updateGL();
     file2.close();
@@ -704,4 +709,8 @@ void LBMainWindow::on_actionExec_1024_it_triggered() {
     for (int i = 0; i < 1024; i++) {
         on_actionNext_triggered();
     }
+}
+
+void LBMainWindow::on_actionImmersed_triggered() {
+    immersed->show();
 }

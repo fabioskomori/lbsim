@@ -222,7 +222,15 @@ SOURCES += \
     view/imageprocessing.cpp \
     view/geometry.cpp \
     model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.cpp \
-    model/latticeboltzmann/meltingsolidification/kornerimplementation.cpp
+    model/latticeboltzmann/meltingsolidification/kornerimplementation.cpp \
+    model/latticeboltzmann/immersed/immersedboundarycontainer.cpp \
+    model/latticeboltzmann/immersed/immerseditem.cpp \
+    model/latticeboltzmann/immersed/circleitem.cpp \
+    model/latticeboltzmann/immersed/lineitem.cpp \
+    model/math/mytwovector3d.cpp \
+    view/immersed.cpp \
+    model/latticeboltzmann/immersed/rectangleitem.cpp \
+    model/latticeboltzmann/immersed/fileitem.cpp
 HEADERS += \
     view/lbmainwindow.h \
     view/lbwidget.h \
@@ -436,7 +444,15 @@ HEADERS += \
     view/imageprocessing.h \
     view/geometry.h \
     model/latticeboltzmann/meltingsolidification/meltingsolidificationcell.h \
-    model/latticeboltzmann/meltingsolidification/kornerimplementation.h
+    model/latticeboltzmann/meltingsolidification/kornerimplementation.h \
+    model/latticeboltzmann/immersed/immersedboundarycontainer.h \
+    model/latticeboltzmann/immersed/immerseditem.h \
+    model/latticeboltzmann/immersed/circleitem.h \
+    model/latticeboltzmann/immersed/lineitem.h \
+    model/math/mytwovector3d.h \
+    view/immersed.h \
+    model/latticeboltzmann/immersed/rectangleitem.h \
+    model/latticeboltzmann/immersed/fileitem.h
 FORMS += \
     view/lbmainwindow.ui \
     view/info.ui \
@@ -457,4 +473,5 @@ FORMS += \
     view/mesher.ui \
     view/moreinfo.ui \
     view/imageprocessing.ui \
-    view/geometry.ui
+    view/geometry.ui \
+    view/immersed.ui

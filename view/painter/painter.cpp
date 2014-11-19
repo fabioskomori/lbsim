@@ -60,6 +60,8 @@
 #include "equallyspacedseeder.h"
 #include "../../model/math/util.h"
 #include "isosurfacehelper.h"
+#include "../../model/latticeboltzmann/immersed/immersedboundarycontainer.h"
+#include "../../model/latticeboltzmann/immersed/immerseditem.h"
 
 using namespace std;
 
@@ -259,6 +261,7 @@ void Painter::paint(bool) {
     }
     if (showParticles) {
         paintPathLines();
+        paintImmersed();
     }
     if (showIsolines) {
         if (grid->getConfig()->getLength() == 1) {
@@ -549,6 +552,35 @@ void Painter::decode(int v, int *x, int *y, int *z) {
     }
     if (v >= 1) {
         *z = 1;
+    }
+}
+
+void Painter::paintImmersed() {
+    glColor3f(0.5, 0.5, 0.5);
+    glLineWidth(cellsSize2);
+    std::list<ImmersedItem*>* items = grid->getImmersed()->getItems();
+    for (std::list<ImmersedItem*>::iterator item = items->begin(); item != items->end(); item++) {
+        std::list<MyVector3D> *points = (*item)->getPoints();
+        if ((*item)->isCellular()) {
+            for (std::list<MyVector3D>::iterator point = points->begin(); point != points->end(); point++) {
+                glBegin(GL_QUADS);
+                glVertex3f(offsetx + (*point).getX() * latticeSize, offsety + (*point).getY() * latticeSize, offsetz + ((*point).getZ() + 0.5) * latticeSize);
+                glVertex3f(offsetx + (*point).getX() * latticeSize + latticeSize * arrowSteps, offsety + (*point).getY() * latticeSize, offsetz + ((*point).getZ() + 0.5) * latticeSize);
+                glVertex3f(offsetx + (*point).getX() * latticeSize + latticeSize * arrowSteps, offsety + (*point).getY() * latticeSize + latticeSize * arrowSteps, offsetz + ((*point).getZ() + 0.5) * latticeSize);
+                glVertex3f(offsetx + (*point).getX() * latticeSize, offsety + (*point).getY() * latticeSize + latticeSize * arrowSteps, offsetz + ((*point).getZ() + 0.5) * latticeSize);
+                glEnd();
+            }
+        } else {
+            if ((*item)->isClosed()) {
+                glBegin(GL_LINE_LOOP);
+            } else {
+                glBegin(GL_LINE_STRIP);
+            }
+            for (std::list<MyVector3D>::iterator point = points->begin(); point != points->end(); point++) {
+                glVertex3f(offsetx + (*point).getX() * latticeSize + latticeSize / 2, offsety + (*point).getY() * latticeSize + latticeSize / 2, offsetz + (*point).getZ() * latticeSize + latticeSize / 2);
+            }
+            glEnd();
+        }
     }
 }
 

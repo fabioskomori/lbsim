@@ -89,6 +89,10 @@ bool MyVector3D::operator==(MyVector3D &a) const {
     return a.x == x && a.y == y && a.z == z;
 }
 
+MyVector3D MyVector3D::rotate2D(MyVector3D c, double r) {
+    return MyVector3D(std::cos(r) * (x - c.x) - std::sin(r) * (y - c.y) + c.x, std::sin(r) * (x - c.x) + std::cos(r) * (y - c.y) + c.y, 0);
+}
+
 MyVector3D MyVector3D::limit(double limit) {
     double norma = norm();
     if (norma > limit) {

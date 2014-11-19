@@ -39,6 +39,7 @@ class Mesher;
 class MoreInfo;
 class ImageProcessing;
 class Geometry;
+class Immersed;
 #include <QMainWindow>
 class About;
 #include <QDir>
@@ -90,6 +91,7 @@ private:
     Animation *animation;
     Parameters2 *parameters;
     MoreInfo *moreInfo;
+    Immersed *immersed;
     ImageProcessing *imageProcessing;
     Geometry *geometry;
     QString lastFileName;
@@ -156,6 +158,7 @@ private slots:
     void on_actionExec_256_it_triggered();
     void on_actionExec_512_it_triggered();
     void on_actionExec_1024_it_triggered();
+    void on_actionImmersed_triggered();
 };
 
 #endif // MAINWINDOW_H

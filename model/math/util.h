@@ -23,6 +23,7 @@ class Util {
 public:
     Util();
     static double interpolate(double x1, double x2, double value);
+    static double dirac(double x);
 };
 
 #endif // UTIL_H
