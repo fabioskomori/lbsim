@@ -1138,8 +1138,8 @@ void Grid::optimize() {
 }
 
 MyVector3D Grid::interpolateVelocity(double x, double y) {
-    int rx = round(x);
-    int ry = round(y);
+    int rx = x < 0.0 ? ceil(x - 0.5) : floor(x + 0.5);
+    int ry = y < 0.0 ? ceil(y - 0.5) : floor(y + 0.5);
     MyVector3D u = MyVector3D();
     for (int tx = rx - 2; tx <= rx + 2; tx++) {
         for (int ty = ry - 2; ty <= ry + 2; ty++) {
