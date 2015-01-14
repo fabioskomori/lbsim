@@ -46,7 +46,7 @@ void PorousCell::postUpdate(Grid *grid, Vector3i position) {
 }
 
 void PorousCell::passivate(QXmlStreamWriter &writer) {
-    SCCell::passivate(writer);
+    SCCell::passivateWithoutType(writer);
     writer.writeAttribute("type", "porous");
     writer.writeAttribute("solidDensity", QString::number(solidDensity));
 }

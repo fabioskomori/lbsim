@@ -42,6 +42,7 @@ public:
     double deltaP();
     double getLastDeltaP();
     virtual void passivate(QXmlStreamWriter &writer);
+    void passivateWithoutType(QXmlStreamWriter &writer);
     virtual void activate(QXmlStreamReader &reader, Grid *grid);
     void setF(int index, double value);
     void zero();

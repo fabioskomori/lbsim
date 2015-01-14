@@ -232,6 +232,15 @@ void SCCell::passivate(QXmlStreamWriter &writer) {
     }
 }
 
+void SCCell::passivateWithoutType(QXmlStreamWriter &writer) {
+    int model = Shared::instance()->getGridConfig()->getModel();
+    writer.writeAttribute("p0", QString::number(p0));
+    writer.writeAttribute("lastDeltaP", QString::number(lastDeltaP));
+    for (int i = 0; i < model; i++) {
+        writer.writeAttribute(QString("f").append(QString::number(i)), QString::number(f[i]));
+    }
+}
+
 void SCCell::activate(QXmlStreamReader &reader, Grid *) {
     p0 = reader.attributes().value("p0").toString().toDouble();
     lastDeltaP = reader.attributes().value("lastDeltaP").toString().toDouble();
