@@ -274,3 +274,15 @@ void Particles::on_injectionTime_returnPressed() {
         PassiveScalarSingleton::getInstance()->setInjectionTime(ui->injectionTime->text().toInt());
     }
 }
+
+void Particles::on_initialConcentration_returnPressed() {
+    if (!ui->particlesType->isChecked()) {
+        PassiveScalarSingleton::getInstance()->setInitialConcentration(ui->initialConcentration->text().toDouble());
+    }
+}
+
+void Particles::on_fixedConcentration_returnPressed() {
+    if (!ui->particlesType->isChecked()) {
+        PassiveScalarSingleton::getInstance()->setFixedConcentration(ui->fixedConcentration->text().toDouble());
+    }
+}

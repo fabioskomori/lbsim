@@ -30,6 +30,7 @@ int PorousCell::getOpenCLType() {
 }
 
 PorousCell::PorousCell(double p0) : SCCell(p0) {
+    index = 0;
     solidDensity = Shared::instance()->getGridConfig()->getSolidDensity();
 }
 

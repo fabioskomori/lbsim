@@ -62,6 +62,8 @@ private slots:
     void on_particlesType_clicked();
     void on_passiveScalarType_clicked();
     void on_injectionTime_returnPressed();
+    void on_initialConcentration_returnPressed();
+    void on_fixedConcentration_returnPressed();
 };
 
 #endif // PARTICLES_H

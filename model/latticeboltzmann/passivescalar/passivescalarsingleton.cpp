@@ -32,6 +32,8 @@ PassiveScalarSingleton::PassiveScalarSingleton() {
     epsilon = 0.5;
     injectionPeriod = injectionTime = 0;
     lastType = 1;
+    initialConcentration = 0;
+    fixedConcentration = 1;
 }
 
 void PassiveScalarSingleton::inject(Grid *grid) {
@@ -126,7 +128,7 @@ void PassiveScalarSingleton::rebuild(int type) {
                         BaseCell *cell = grid->getGrid(y, x, z);
                         if (cell != 0) {
                             PassiveScalarCell *psc = dynamic_cast<PassiveScalarCell*>(cell);
-                            psc->setFixedConcentration(1);
+                            psc->setFixedConcentration(fixedConcentration);
                             psc->setIndex(index);
                             psc->reset(-1);
                         }
@@ -218,4 +220,20 @@ int PassiveScalarSingleton::getInjectionTime() {
 
 int PassiveScalarSingleton::getLastType() {
     return lastType;
+}
+
+void PassiveScalarSingleton::setFixedConcentration(double fixedConcentration) {
+    this->fixedConcentration = fixedConcentration;
+}
+
+double PassiveScalarSingleton::getFixedConcentration() {
+    return fixedConcentration;
+}
+
+void PassiveScalarSingleton::setInitialConcentration(double initialConcentration) {
+    this->initialConcentration = initialConcentration;
+}
+
+double PassiveScalarSingleton::getInitialConcentration() {
+    return initialConcentration;
 }

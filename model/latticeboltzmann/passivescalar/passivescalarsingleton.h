@@ -48,6 +48,10 @@ public:
     void setInjectionTime(int injectionTime);
     int getInjectionTime();
     int getLastType();
+    void setInitialConcentration(double initialConcentration);
+    double getInitialConcentration();
+    void setFixedConcentration(double fixedConcentration);
+    double getFixedConcentration();
 private:
     PassiveScalarSingleton();
     void rebuild(int type = 1);
@@ -56,6 +60,7 @@ private:
     Vector3i *colors;
     double epsilon;
     int injectionPeriod, injectionTime, lastType;
+    double initialConcentration, fixedConcentration;
 };
 
 #endif // PASSIVESCALARSINGLETON_H

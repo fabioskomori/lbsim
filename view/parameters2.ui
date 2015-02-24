@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -740,6 +740,9 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="text">
        <string>Load Mask</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="label_62">

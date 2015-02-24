@@ -104,7 +104,7 @@ void PassiveScalarCell::reset(int) {
             /*if (index == a) {
                 f[a * Shared::instance()->getGridConfig()->getModel() + i] = LBUtil::f_eq2(MyVector3D(), fixedConcentration, Shared::instance()->getGridConfig()->getModel(), i);
             } else {*/
-                f[a * Shared::instance()->getGridConfig()->getModel() + i] = 0;
+                f[a * Shared::instance()->getGridConfig()->getModel() + i] = LBUtil::f_eq2(MyVector3D(), PassiveScalarSingleton::getInstance()->getInitialConcentration(), Shared::instance()->getGridConfig()->getModel(), i);
             //}
         }
     }
@@ -117,10 +117,10 @@ void PassiveScalarCell::preUpdate(double epsilon[], BaseCell* neighbors[], Grid 
         int colors = PassiveScalarSingleton::getInstance()->getColorsQuantity();
         int model = grid->getConfig()->getModel();
         for (int a = 0; a < colors; a++) {
-            if (fixedConcentration > 0 && a == index) {
+            if (fixedConcentration >= 0 && a == index) {
                 for (int i = 0; i < model; i++) {
                     if (neighbors[i] != 0) {
-                        neighbors[i]->setNextF(i, LBUtil::f_eq2(cell->getU(0), (PassiveScalarSingleton::getInstance()->getInjectionPeriod() == 0 || grid->getSimulation()->getIterations() % PassiveScalarSingleton::getInstance()->getInjectionPeriod() < PassiveScalarSingleton::getInstance()->getInjectionTime()) ? (fixedConcentration + PassiveScalarSingleton::getInstance()->getEpsilon(a) * (cell->getP(10 + a) - fixedConcentration)) : 0, model, i), 10 + a);
+                        neighbors[i]->setNextF(i, LBUtil::f_eq2(cell->getU(0), (PassiveScalarSingleton::getInstance()->getInjectionPeriod() == 0 || grid->getSimulation()->getIterations() % PassiveScalarSingleton::getInstance()->getInjectionPeriod() < PassiveScalarSingleton::getInstance()->getInjectionTime()) ? (fixedConcentration/* + PassiveScalarSingleton::getInstance()->getEpsilon(a) * (cell->getP(10 + a) - fixedConcentration)*/) : 0, model, i), 10 + a);
                     }
                 }
             } else {
@@ -341,7 +341,7 @@ bool PassiveScalarCell::isFluid() {
 }
 
 int PassiveScalarCell::getOpenCLType() {
-    if (fixedConcentration > 0) {
+    if (fixedConcentration >= 0) {
         return -(index + 1);
     }
     return cell->getOpenCLType();

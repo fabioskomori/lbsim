@@ -41,6 +41,7 @@ class Force;
 #include "../../model/math/vector3i.h"
 #include <list>
 #include <QString>
+#include <typeinfo>
 
 class GridConfig {
 public:
