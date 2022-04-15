@@ -1,13 +1,13 @@
 #include "immersedboundarycontainer.h"
 
 #include "circleitem.h"
-#include "../model/latticeboltzmann/lbgrid.h"
-#include "../model/math/util.h"
+#include "../../model/latticeboltzmann/lbgrid.h"
+#include "../../model/math/util.h"
 #include <cmath>
-#include "../model/latticeboltzmann/basecell.h"
-#include "../model/latticeboltzmann/lbutil.h"
-#include "../model/math/vector3i.h"
-#include "../model/latticeboltzmann/sccell.h"
+#include "../../model/latticeboltzmann/basecell.h"
+#include "../../model/latticeboltzmann/lbutil.h"
+#include "../../model/math/vector3i.h"
+#include "../../model/latticeboltzmann/sccell.h"
 #include "fileitem.h"
 #include <QDebug>
 

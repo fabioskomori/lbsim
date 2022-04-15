@@ -1,7 +1,7 @@
 #ifndef IMMERSEDITEM_H
 #define IMMERSEDITEM_H
 
-#include "../model/math/myvector3d.h"
+#include "../../model/math/myvector3d.h"
 #include <list>
 #include <QString>
 #include <map>

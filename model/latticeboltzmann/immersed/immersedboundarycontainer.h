@@ -4,7 +4,7 @@
 #include <list>
 class ImmersedItem;
 class Grid;
-#include "../model/math/mytwovector3d.h"
+#include "../../model/math/mytwovector3d.h"
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 

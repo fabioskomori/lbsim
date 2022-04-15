@@ -33,11 +33,15 @@
 #include "qwt_plot_marker.h"
 #include "qwt_picker_machine.h"
 #include "qwt_plot_zoomer.h"
+#include "qwt_scale_div.h"
 #include "qwt_symbol.h"
+#include "qwt_text.h"
 #include "util/xypoint.h"
 #include "util/singleton.h"
 #include "painterconfig.h"
 #include <QDebug>
+#include <QButtonGroup>
+#include <cmath>
 
 Chart::Chart(QWidget *parent) : QDialog(parent), ui(new Ui::Chart) {
     ui->setupUi(this);
@@ -141,7 +145,7 @@ void Chart::processGrid(Grid *grid) {
             /*vorticities = grid->computeVorticity();
             streams = grid->computeStream(Singleton::instance()->getPainterConfig()->getStreamIntegrationX(), Singleton::instance()->getPainterConfig()->getStreamIntegrationY());*/
             if (ui->chartType->currentText() == "-log(DeltaP)") {
-                temp.push_back(XYPoint(grid->getSimulation()->getIterations(), -log10(grid->getSimulation()->getDeltaP())));
+                temp.push_back(XYPoint(grid->getSimulation()->getIterations(), -std::log10(grid->getSimulation()->getDeltaP())));
             }
             if (ui->chartType->currentText() == "Drag") {
                 grid->computeDrag();
@@ -238,7 +242,7 @@ void Chart::updateChart(std::list<XYPoint> &points, QwtPlotCurve *curve) {
         y[i] = (*point).getY();
         i++;
     }
-    curve->setData(new QwtPointArrayData(x, y, points.size()));;
+    curve->setData(new QwtPointArrayData<double>(x, y, points.size()));
     delete[] x;
     delete[] y;
 }
